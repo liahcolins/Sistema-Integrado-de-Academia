@@ -121,6 +121,10 @@ O sistema gera:
 
 ---
 
+##  Pré-requisitos
+
+- Python 3.x instalado
+
 ##  Como Executar
 ### 1. Clonar o repositório
 
@@ -136,7 +140,8 @@ cd Sistema-Integrado-de-Academia
 ### 3. Executar o projeto
 
 ```bash
-python main.py
+python3 main.py
+
 ```
 
 
