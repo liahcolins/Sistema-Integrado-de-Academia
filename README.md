@@ -129,9 +129,16 @@ git clone https://github.com/liahcolins/Sistema-Integrado-de-Academia.git
 ```
 
 ### 2. Acessar a pasta
+```bash
+cd Sistema-Integrado-de-Academia
+````
 
 ### 3. Executar o projeto
+
+```bash
 python main.py
+```
+
 
 ##  Integrantes
 - Ana Patricia Garros Viegas
