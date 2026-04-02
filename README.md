@@ -143,9 +143,9 @@ python main.py
 
 ##  Informações Acadêmicas
 
-Disciplina: Projeto e Desenvolvimento de Software
-Instituição: UFMA — Universidade Federal do Maranhão
-Professor: DAVI VIANA DOS SANTOS
+ - Disciplina: Projeto e Desenvolvimento de Software
+ - Instituição: UFMA - Universidade Federal do Maranhão
+ - Professor: DAVI VIANA DOS SANTOS
 
 
 
