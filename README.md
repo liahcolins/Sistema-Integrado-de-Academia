@@ -1,4 +1,4 @@
-#  FitCore — Sistema Integrado de Gestão de Academia
+#  FitCore - Sistema Integrado de Gestão de Academia
 
 ## Objetivo do Projeto
 
