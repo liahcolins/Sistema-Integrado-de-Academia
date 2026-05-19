@@ -52,8 +52,7 @@ Principais entidades do sistema:
 
 ###  Relacionamentos
 
-- Um aluno pode possuir vários treinos  
-- Um plano pode estar associado a vários alunos  
+- Um aluno pode possuir vários treinos   
 - Um treino é composto por vários exercícios  
 - Pagamentos estão vinculados a alunos  
 
@@ -65,8 +64,7 @@ Principais entidades do sistema:
 
 O sistema recebe:
 
-- Dados cadastrais de alunos  
-- Informações de planos  
+- Dados cadastrais de alunos   
 - Definição de treinos  
 - Registros de pagamento  
 
@@ -76,7 +74,7 @@ O sistema recebe:
 
 O sistema realiza:
 
-- Associação de alunos a planos  
+- Associação de alunos e treinos
 - Vinculação de treinos personalizados  
 - Cálculo de status financeiro  
 - Registro e controle de frequência  
