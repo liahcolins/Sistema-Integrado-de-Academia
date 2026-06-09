@@ -61,7 +61,8 @@ CREATE TABLE exercicio (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
     descricao TEXT,
-    categoria VARCHAR(50) NOT NULL
+    categoria VARCHAR(50) NOT NULL,
+    nivel VARCHAR(20)
 );
 
 CREATE TABLE item_treino (
