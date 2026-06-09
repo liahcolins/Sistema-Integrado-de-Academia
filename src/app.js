@@ -2,12 +2,14 @@ const express = require('express');
 require('./config/database');
 
 const clienteRoutes = require('./routes/clienteRoutes');
+const exercicioRoutes = require('./routes/exercicioRoutes');
 
 const app = express();
 
 app.use(express.json());
 
 app.use('/clientes', clienteRoutes);
+app.use('/exercicios', exercicioRoutes);
 
 const PORT = 3000;
 
