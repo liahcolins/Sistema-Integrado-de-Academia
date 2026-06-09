@@ -37,6 +37,46 @@ class PersonalTrainerController {
 
     }
 
+    static atualizar(req, res) {
+
+        const id = req.params.id;
+
+        PersonalTrainer.atualizar(id, req.body, (erro, resultado) => {
+
+            if (erro) {
+                return res.status(500).json({
+                    erro: 'Erro ao atualizar personal trainer'
+                });
+            }
+
+            res.json({
+                mensagem: 'Personal trainer atualizado com sucesso'
+            });
+
+        });
+
+    }
+
+    static excluir(req, res) {
+
+        const id = req.params.id;
+
+        PersonalTrainer.excluir(id, (erro, resultado) => {
+
+            if (erro) {
+                return res.status(500).json({
+                    erro: 'Erro ao excluir personal trainer'
+                });
+            }
+
+            res.json({
+                mensagem: 'Personal trainer excluído com sucesso'
+            });
+
+        });
+
+    }
+
 }
 
 module.exports = PersonalTrainerController;
