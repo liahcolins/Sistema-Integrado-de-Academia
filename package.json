@@ -1,0 +1,24 @@
+{
+  "name": "sistema-integrado-de-academia",
+  "version": "1.0.0",
+  "description": "O **FitCore** foi desenvolvido como parte da disciplina de **Projeto e Desenvolvimento de Software**, com o objetivo de aplicar conceitos de engenharia de software na construção de um sistema real.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/liahcolins/Sistema-Integrado-de-Academia.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/liahcolins/Sistema-Integrado-de-Academia/issues"
+  },
+  "homepage": "https://github.com/liahcolins/Sistema-Integrado-de-Academia#readme"
+}
