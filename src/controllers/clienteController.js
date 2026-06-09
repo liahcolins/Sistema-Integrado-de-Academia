@@ -37,6 +37,46 @@ class ClienteController {
 
     }
 
+    static atualizar(req, res) {
+
+        const id = req.params.id;
+
+        Cliente.atualizar(id, req.body, (erro, resultado) => {
+
+            if (erro) {
+                return res.status(500).json({
+                    erro: 'Erro ao atualizar cliente'
+                });
+            }
+
+            res.json({
+                mensagem: 'Cliente atualizado com sucesso'
+            });
+
+        });
+
+    }
+
+    static excluir(req, res) {
+
+        const id = req.params.id;
+
+        Cliente.excluir(id, (erro, resultado) => {
+
+            if (erro) {
+                return res.status(500).json({
+                    erro: 'Erro ao excluir cliente'
+                });
+            }
+
+            res.json({
+                mensagem: 'Cliente excluído com sucesso'
+            });
+
+        });
+
+    }
+
 }
 
 module.exports = ClienteController;

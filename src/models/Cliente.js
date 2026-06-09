@@ -36,6 +36,41 @@ class Cliente {
         );
     }
 
+    static atualizar(id, dados, callback) {
+
+        const sql = `
+            UPDATE cliente
+            SET
+                nome = ?,
+                email = ?,
+                senha = ?,
+                status_matricula = ?
+            WHERE id = ?
+        `;
+
+        db.query(
+            sql,
+            [
+                dados.nome,
+                dados.email,
+                dados.senha,
+                dados.status_matricula,
+                id
+            ],
+            callback
+        );
+    }
+
+    static excluir(id, callback) {
+
+        const sql = `
+            DELETE FROM cliente
+            WHERE id = ?
+        `;
+
+        db.query(sql, [id], callback);
+    }
+
 }
 
 module.exports = Cliente;
