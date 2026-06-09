@@ -1,16 +1,41 @@
-const Usuario = require('./Usuario'); //Essa linha é semelhante ao import
+const db = require('../config/database');
 
-class PersonalTrainer extends Usuario {
-    constructor(id, nome, email, senha, cref) {
-        super(id, nome, email, senha);
-        this.cref = cref;
+class PersonalTrainer {
+
+    static listarTodos(callback) {
+
+        const sql = `
+            SELECT
+                id,
+                nome,
+                email,
+                cref
+            FROM personal_trainer
+        `;
+
+        db.query(sql, callback);
     }
 
-    montarTreino() {}
+    static criar(dados, callback) {
 
-    editarTreino() {}
+        const sql = `
+            INSERT INTO personal_trainer
+            (nome, email, senha, cref)
+            VALUES (?, ?, ?, ?)
+        `;
 
-    assumirCliente() {}
+        db.query(
+            sql,
+            [
+                dados.nome,
+                dados.email,
+                dados.senha,
+                dados.cref
+            ],
+            callback
+        );
+    }
+
 }
 
-module.exports = PersonalTrainer; //Essa linha disponibiliza a classe para outros arquivos
+module.exports = PersonalTrainer;
