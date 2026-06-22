@@ -6,6 +6,7 @@ require('./config/database');
 const clienteRoutes = require('./routes/clienteRoutes');
 const exercicioRoutes = require('./routes/exercicioRoutes');
 const personalTrainerRoutes = require('./routes/personalTrainerRoutes');
+const administradorRoutes = require('./routes/administradorRoutes');
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use(express.urlencoded({
 app.use('/clientes', clienteRoutes);
 app.use('/exercicios', exercicioRoutes);
 app.use('/personal-trainers', personalTrainerRoutes);
+app.use('/administradores', administradorRoutes);
 
 app.use(
     '/bootstrap',
