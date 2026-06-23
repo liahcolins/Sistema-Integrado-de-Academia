@@ -101,4 +101,14 @@ app.listen(PORT, () => {
     );
 });
 
+app.get('/cadastro', (req, res) => {
 
+    res.sendFile(
+        path.join(
+            __dirname,
+            'views',
+            'cadastro.html'
+        )
+    );
+
+});

@@ -77,6 +77,19 @@ class ClienteController {
 
     }
 
+    static dashboard(req, res) {
+
+        const dados = {
+            nome: "João Silva",
+            matricula: "2025001",
+            plano: "Premium",
+            treinoAtual: "Hipertrofia",
+            vencimento: "15/07/2026"
+        };
+
+        res.json(dados);
+    }
+
 }
 
 module.exports = ClienteController;
