@@ -1,106 +1,111 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-
     <meta charset="UTF-8">
+    <title>Dashboard Admin - FitCore</title>
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
 
-    <title>Dashboard - FitCore</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link
-        rel="stylesheet"
-        href="/bootstrap/css/bootstrap.min.css"
-    >
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
 
-    <link
-        rel="stylesheet"
-        href="/css/style.css"
-    >
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
 
+    <!-- CSS da landing (topbar + navbar) -->
+    <link rel="stylesheet" href="/css/landing.css">
+
+    <!-- CSS exclusivo da dashboard -->
+    <link rel="stylesheet" href="/css/dashboard.css">
 </head>
-
 <body>
 
-    <div class="dashboard-container">
+    <!-- TOPBAR IGUAL DA LANDING -->
+    <div class="topbar">
+        <span>
+            <i class="material-symbols-outlined">location_on</i>
+            São Luís - MA
+        </span>
 
-        <aside class="sidebar">
+        <span>
+            <i class="material-symbols-outlined">call</i>
+            (98) 99999-9999
+        </span>
 
-            <h2 class="logo">
-                FIT<span>CORE</span>
-            </h2>
+        <span>
+            <i class="material-symbols-outlined">mail</i>
+            contato@fitcore.com
+        </span>
+    </div>
 
-            <nav>
+    <!-- NAVBAR IGUAL DA LANDING -->
+    <nav class="landing-navbar">
+        <h2 class="landing-logo">FIT<span>CORE</span></h2>
 
-                <ul>
+        <ul>
+            <li><a class="active" href="/admin/dashboard">Dashboard</a></li>
+            <li><a href="/admin/clientes">Clientes</a></li>
+            <li><a href="#">Personais</a></li>
+            <li><a href="#">Exercícios</a></li>
+            <li><a href="/admin/treinos">Treinos</a></li>
+            <li><a href="#">Matrículas</a></li>
+        </ul>
 
-                    <li>
-                        <a href="#" class="active">
-                            Dashboard
-                        </a>
-                    </li>
+        <div class="nav-buttons">
+            <button class="btn-login">SAIR</button>
+        </div>
+    </nav>
 
-                    <li>
-                        <a href="/admin/clientes">
-                            Clientes
-                        </a>
-                    </li>
+    <main class="dashboard-page">
+        <section class="dashboard-hero">
+            <div class="dashboard-overlay"></div>
 
-                    <li>
-                        <a href="#">
-                            Personais
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="#">
-                            Exercícios
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="/admin/treinos">
-                            Treinos
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="#">
-                            Matrículas
-                        </a>
-                    </li>
-
-                </ul>
-
-            </nav>
-
-        </aside>
-
-        <main class="content">
-
-            <div class="overlay"></div>
-
-            <div class="welcome-card">
+            <div class="dashboard-content">
+                <p class="dashboard-mini">ÁREA ADMINISTRATIVA</p>
 
                 <h1>
-                    Bem-vindo ao FitCore
+                    GERENCIE TODA A<br>
+                    <span>FITCORE</span>
                 </h1>
 
                 <p>
-                    Sistema Integrado de Academia
+                    Controle clientes, treinos, matrículas,
+                    personais e exercícios em um só lugar.
                 </p>
-
             </div>
+        </section>
 
-        </main>
+        <section class="admin-actions">
 
-    </div>
+            <a href="/admin/clientes" class="admin-card">
+                <h3>Clientes</h3>
+                <p>Gerencie cadastros de alunos.</p>
+            </a>
 
-    <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+            <a href="#" class="admin-card">
+                <h3>Personais</h3>
+                <p>Gerencie personal trainers.</p>
+            </a>
+
+            <a href="#" class="admin-card">
+                <h3>Exercícios</h3>
+                <p>Cadastre exercícios.</p>
+            </a>
+
+            <a href="/admin/treinos" class="admin-card">
+                <h3>Treinos</h3>
+                <p>Monte e organize treinos.</p>
+            </a>
+
+            <a href="#" class="admin-card">
+                <h3>Matrículas</h3>
+                <p>Controle matrículas ativas.</p>
+            </a>
+
+        </section>
+    </main>
 
 </body>
 </html>

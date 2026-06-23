@@ -2,20 +2,27 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>FitCore</title>
+    <title>Dashboard Admin - FitCore</title>
 
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
 
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+
+    <!-- CSS da landing (topbar + navbar) -->
     <link rel="stylesheet" href="/css/landing.css">
+
+    <!-- CSS exclusivo da dashboard -->
+    <link rel="stylesheet" href="/css/dashboard.css">
 </head>
 <body>
 
+    <!-- TOPBAR IGUAL DA LANDING -->
     <div class="topbar">
         <span>
             <i class="material-symbols-outlined">location_on</i>
@@ -31,94 +38,74 @@
             <i class="material-symbols-outlined">mail</i>
             contato@fitcore.com
         </span>
-
     </div>
 
+    <!-- NAVBAR IGUAL DA LANDING -->
     <nav class="landing-navbar">
         <h2 class="landing-logo">FIT<span>CORE</span></h2>
 
         <ul>
-            <li><a href="#" class="active">Home</a></li>
-            <li><a href="#">Sobre</a></li>
-            <li><a href="#">Planos</a></li>
-            <li><a href="#">Contato</a></li>
+            <li><a class="active" href="/admin/dashboard">Dashboard</a></li>
+            <li><a href="/admin/clientes">Clientes</a></li>
+            <li><a href="#">Personais</a></li>
+            <li><a href="#">Exercícios</a></li>
+            <li><a href="/admin/treinos">Treinos</a></li>
+            <li><a href="#">Matrículas</a></li>
         </ul>
 
         <div class="nav-buttons">
-            <button class="btn-login">ENTRAR</button>
-            <button class="btn-register">CADASTRE-SE</button>
+            <button class="btn-login">SAIR</button>
         </div>
     </nav>
 
-    <section class="hero">
-        <div class="hero-overlay"></div>
+    <main class="dashboard-page">
+        <section class="dashboard-hero">
+            <div class="dashboard-overlay"></div>
 
-        <div class="hero-content">
-            <p class="hero-mini">BEM-VINDO A FITCORE</p>
+            <div class="dashboard-content">
+                <p class="dashboard-mini">ÁREA ADMINISTRATIVA</p>
 
-            <h1 class="hero-title">
-                <div>SUPERE SEUS LIMITES</div>
-                <div class="red-line">TREINE COM A FITCORE</div>
-            </h1>
+                <h1>
+                    GERENCIE TODA A<br>
+                    <span>FITCORE</span>
+                </h1>
 
-            <p class="hero-description">
-                Tecnologia, acompanhamento profissional
-                e treinos personalizados para maximizar
-                seus resultados.
-            </p>
-
-            <div class="hero-buttons">
-                <button class="btn-register">Cadastre-se</button>
-                <button class="btn-login">Entrar</button>
+                <p>
+                    Controle clientes, treinos, matrículas,
+                    personais e exercícios em um só lugar.
+                </p>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="about-section">
-        <div class="about-text">
-            <p class="section-mini">SOBRE NÓS</p>
+        <section class="admin-actions">
 
-            <h2>Conheça nosso trabalho</h2>
+            <a href="/admin/clientes" class="admin-card">
+                <h3>Clientes</h3>
+                <p>Gerencie cadastros de alunos.</p>
+            </a>
 
-            <p>
-                A FitCore combina tecnologia, gestão e
-                acompanhamento profissional para transformar
-                a experiência dentro da academia.
-            </p>
+            <a href="#" class="admin-card">
+                <h3>Personais</h3>
+                <p>Gerencie personal trainers.</p>
+            </a>
 
-            <p>
-                Nossa plataforma conecta alunos, personal
-                trainers e administradores em um sistema
-                único e eficiente.
-            </p>
-        </div>
+            <a href="#" class="admin-card">
+                <h3>Exercícios</h3>
+                <p>Cadastre exercícios.</p>
+            </a>
 
-        <div class="about-image">
-            <img src="/img/fundo-academia.png">
-        </div>
-    </section>
+            <a href="/admin/treinos" class="admin-card">
+                <h3>Treinos</h3>
+                <p>Monte e organize treinos.</p>
+            </a>
 
-    <section class="features">
-        <div class="feature-box">
-            <h4>Treinos Personalizados</h4>
-            <p>Programas ajustados aos seus objetivos.</p>
-        </div>
+            <a href="#" class="admin-card">
+                <h3>Matrículas</h3>
+                <p>Controle matrículas ativas.</p>
+            </a>
 
-        <div class="feature-box">
-            <h4>Profissionais Qualificados</h4>
-            <p>Equipe pronta para ajudar.</p>
-        </div>
-
-        <div class="feature-box">
-            <h4>Acompanhamento Completo</h4>
-            <p>Monitore sua evolução.</p>
-        </div>
-
-        <div class="feature-box">
-            <h4>Aulas Diversificadas</h4>
-            <p>Modalidades para todos.</p>
-        </div>
-    </section>
+        </section>
+    </main>
 
 </body>
 </html>
