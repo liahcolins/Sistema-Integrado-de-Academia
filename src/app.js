@@ -50,6 +50,18 @@ app.get('/', (req, res) => {
         path.join(
             __dirname,
             'views',
+            'landing.html'
+        )
+    );
+
+});
+
+app.get('/admin/dashboard', (req, res) => {
+
+    res.sendFile(
+        path.join(
+            __dirname,
+            'views',
             'admin',
             'dashboard.html'
         )
@@ -88,3 +100,5 @@ app.listen(PORT, () => {
         `Servidor rodando na porta ${PORT}`
     );
 });
+
+
