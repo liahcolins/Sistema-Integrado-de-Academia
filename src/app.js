@@ -70,6 +70,19 @@ app.get('/admin/clientes', (req, res) => {
 
 });
 
+app.get('/admin/treinos', (req, res) => {
+
+    res.sendFile(
+        path.join(
+            __dirname,
+            'views',
+            'admin',
+            'treinos.html'
+        )
+    );
+
+});
+
 app.listen(PORT, () => {
     console.log(
         `Servidor rodando na porta ${PORT}`
