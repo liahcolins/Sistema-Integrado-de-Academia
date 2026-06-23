@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
-
     <title>Dashboard Cliente - FitCore</title>
 
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
@@ -11,23 +9,18 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
 
     <link rel="stylesheet" href="/css/landing.css">
-
-    <link rel="stylesheet" href="/css/dashboard-cliente.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
 </head>
 
 <body>
 
-    <!-- TOPBAR -->
-
     <div class="topbar">
-
         <span>
             <i class="material-symbols-outlined">location_on</i>
             São Luís - MA
@@ -42,126 +35,63 @@
             <i class="material-symbols-outlined">mail</i>
             contato@fitcore.com
         </span>
-
     </div>
 
-    <!-- NAVBAR -->
-
     <nav class="landing-navbar">
-
-        <h2 class="landing-logo">
-            FIT<span>CORE</span>
-        </h2>
+        <h2 class="landing-logo">FIT<span>CORE</span></h2>
 
         <ul>
-
-            <li>
-                <a
-                    href="/cliente/dashboard"
-                    class="active"
-                >
-                    Dashboard
-                </a>
-            </li>
-
-            <li>
-                <a href="/cliente/meu-treino">
-                    Meu Treino
-                </a>
-            </li>
-
-            <li>
-                <a href="/cliente/minha-matricula">
-                    Matrícula
-                </a>
-            </li>
-
-            <li>
-                <a href="/cliente/evolucao">
-                    Evolução
-                </a>
-            </li>
-
+            <li><a class="active" href="/cliente/dashboard">Dashboard</a></li>
+            <li><a href="/cliente/meu-treino">Meus Treinos</a></li>
+            <li><a href="/cliente/evolucao">Evolução</a></li>
+            <li><a href="/cliente/minha-matricula">Matrícula</a></li>
         </ul>
 
         <div class="nav-buttons">
-            <button class="btn-login">
-                SAIR
-            </button>
+            <button class="btn-login">SAIR</button>
         </div>
-
     </nav>
 
     <main class="dashboard-page">
 
         <section class="dashboard-hero">
+            <div class="dashboard-overlay"></div>
 
             <div class="dashboard-content">
-
-                <p class="dashboard-mini">
-                    ÁREA DO ALUNO
-                </p>
+                <p class="dashboard-mini">ÁREA DO ALUNO</p>
 
                 <h1>
-                    ACOMPANHE SUA
-                    <br>
-                    <span>EVOLUÇÃO</span>
+                    BEM-VINDO À<br>
+                    <span>FITCORE</span>
                 </h1>
 
                 <p>
-                    Consulte seus treinos, acompanhe
-                    seu desempenho e mantenha sua
-                    matrícula sempre atualizada.
+                    Acompanhe seus treinos, evolução,
+                    matrícula e informações pessoais em um só lugar.
                 </p>
-
             </div>
-
         </section>
 
-        <section class="cliente-actions">
+        <section class="admin-actions">
 
-            <a
-                href="/cliente/meu-treino"
-                class="cliente-card"
-            >
-                <h3>Meu Treino</h3>
-
-                <p>
-                    Visualize seus treinos personalizados.
-                </p>
+            <a href="/cliente/meu-treino" class="admin-card">
+                <h3>Meus Treinos</h3>
+                <p>Visualize sua rotina de exercícios.</p>
             </a>
 
-            <a
-                href="/cliente/evolucao"
-                class="cliente-card"
-            >
+            <a href="/cliente/evolucao" class="admin-card">
                 <h3>Evolução</h3>
-
-                <p>
-                    Acompanhe seu progresso.
-                </p>
+                <p>Acompanhe seu progresso físico.</p>
             </a>
 
-            <a
-                href="/cliente/minha-matricula"
-                class="cliente-card"
-            >
+            <a href="/cliente/minha-matricula" class="admin-card">
                 <h3>Matrícula</h3>
-
-                <p>
-                    Consulte sua situação atual.
-                </p>
+                <p>Consulte o status da sua matrícula.</p>
             </a>
 
-            <a
-                href="/cliente/perfil"
-                class="cliente-card"
-            >
-                <h3>Meu Perfil</h3>
-
-                <p>
-                    Atualize seus dados pessoais.
-                </p>
+            <a href="/cliente/perfil" class="admin-card">
+                <h3>Perfil</h3>
+                <p>Veja e atualize seus dados pessoais.</p>
             </a>
 
         </section>
