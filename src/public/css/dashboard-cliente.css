@@ -1,0 +1,182 @@
+.dashboard-page {
+    background: #000;
+    min-height: 100vh;
+}
+
+/* HERO */
+
+.dashboard-hero {
+    position: relative;
+
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+
+    background:
+        linear-gradient(
+            rgba(0,0,0,.55),
+            rgba(0,0,0,.70)
+        ),
+        url('/img/fundo-academia.png');
+
+    background-size: cover;
+    background-position: center;
+}
+
+.dashboard-content {
+    position: relative;
+    z-index: 2;
+
+    padding-left: 90px;
+
+    max-width: 700px;
+}
+
+.dashboard-mini {
+    color: #dc2626;
+
+    font-family: 'Oswald', sans-serif;
+
+    font-size: 20px;
+
+    margin-bottom: 20px;
+}
+
+.dashboard-content h1 {
+    color: white;
+
+    font-family: 'Oswald', sans-serif;
+
+    font-size: clamp(
+        50px,
+        6vw,
+        90px
+    );
+
+    line-height: .95;
+}
+
+.dashboard-content h1 span {
+    color: #dc2626;
+}
+
+.dashboard-content p {
+    color: #ddd;
+
+    font-size: 20px;
+
+    margin-top: 25px;
+
+    line-height: 1.6;
+}
+
+/* CARDS */
+
+.cliente-actions {
+
+    position: absolute;
+
+    bottom: 60px;
+
+    left: 90px;
+
+    right: 90px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(250px,1fr)
+        );
+
+    gap: 25px;
+
+    z-index: 3;
+}
+
+.cliente-card {
+
+    background: rgba(
+        20,
+        20,
+        20,
+        0.55
+    );
+
+    backdrop-filter: blur(8px);
+
+    border-left: 4px solid #dc2626;
+
+    border-radius: 20px;
+
+    padding: 28px;
+
+    text-decoration: none;
+
+    transition: .3s;
+}
+
+.cliente-card:hover {
+
+    transform:
+        translateY(-6px);
+
+    background:
+        rgba(
+            30,
+            30,
+            30,
+            .75
+        );
+}
+
+.cliente-card h3 {
+
+    color: #dc2626;
+
+    font-family:
+        'Oswald',
+        sans-serif;
+
+    margin-bottom: 12px;
+}
+
+.cliente-card p {
+    color: #ddd;
+}
+
+/* NOTEBOOK */
+
+@media (max-width: 1366px) {
+
+    .dashboard-content h1 {
+        font-size: 60px;
+    }
+
+    .cliente-actions {
+        bottom: 40px;
+    }
+}
+
+/* CELULAR */
+
+@media (max-width: 768px) {
+
+    .dashboard-content {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
+    .cliente-actions {
+
+        position: relative;
+
+        left: auto;
+        right: auto;
+        bottom: auto;
+
+        padding: 30px;
+    }
+}
