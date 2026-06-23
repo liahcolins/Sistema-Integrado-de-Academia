@@ -23,6 +23,8 @@ class TreinoController {
         Treino.criar(req.body, (erro, resultado) => {
 
             if (erro) {
+
+                console.error('Erro ao cadastrar treino:', erro);
                 return res.status(500).json({
                     erro: 'Erro ao cadastrar treino'
                 });
