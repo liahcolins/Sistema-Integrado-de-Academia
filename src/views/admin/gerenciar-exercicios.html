@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Gerenciar Personais - FitCore</title>
+    <title>Gerenciar Exercícios - FitCore</title>
 
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
 
@@ -40,8 +40,8 @@
     <ul>
         <li><a href="/admin/dashboard">Dashboard</a></li>
         <li><a href="/admin/gerenciar-clientes">Clientes</a></li>
-        <li><a class="active" href="/admin/gerenciar-personais">Personais</a></li>
-        <li><a href="/admin/gerenciar-exercicios">Exercícios</a></li>
+        <li><a href="/admin/gerenciar-personais">Personais</a></li>
+        <li><a class="active" href="/admin/gerenciar-exercicios">Exercícios</a></li>
         <li><a href="/admin/treinos">Treinos</a></li>
         <li><a href="#">Matrículas</a></li>
     </ul>
@@ -57,45 +57,43 @@
         <div class="clientes-header">
             <div>
                 <p class="section-mini">GERENCIAMENTO</p>
-                <h1>Personais</h1>
+                <h1>Exercícios</h1>
             </div>
 
             <button
                 class="btn-register"
                 data-bs-toggle="modal"
-                data-bs-target="#modalPersonal"
+                data-bs-target="#modalExercicio"
             >
-                + Novo Personal
+                + Novo Exercício
             </button>
         </div>
 
         <div class="clientes-table-card">
-
-            <!-- AQUI ESTAVA O ERRO -->
             <table class="clientes-table">
                 <thead>
                     <tr>
                         <th class="col-id">ID</th>
                         <th class="col-nome">Nome</th>
-                        <th class="col-email">Email</th>
-                        <th class="col-status">CREF</th>
+                        <th class="col-email">Descrição</th>
+                        <th class="col-status">Categoria</th>
                         <th class="col-acoes">Ações</th>
                     </tr>
                 </thead>
 
-                <tbody id="personaisTable"></tbody>
+                <tbody id="exerciciosTable"></tbody>
             </table>
-
         </div>
+
     </div>
 </section>
 
-<div class="modal fade" id="modalPersonal" tabindex="-1">
+<div class="modal fade" id="modalExercicio" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content modal-fitcore">
 
             <div class="modal-header">
-                <h5>Cadastrar Personal</h5>
+                <h5>Cadastrar Exercício</h5>
 
                 <button
                     class="btn-close btn-close-white"
@@ -104,11 +102,22 @@
             </div>
 
             <div class="modal-body">
-                <form id="personalForm">
+                <form id="exercicioForm">
                     <input type="text" id="nome" placeholder="Nome" required>
-                    <input type="email" id="email" placeholder="Email" required>
-                    <input type="password" id="senha" placeholder="Senha" required>
-                    <input type="text" id="cref" placeholder="CREF" required>
+
+                    <input
+                        type="text"
+                        id="descricao"
+                        placeholder="Descrição"
+                        required
+                    >
+
+                    <input
+                        type="text"
+                        id="categoria"
+                        placeholder="Categoria"
+                        required
+                    >
 
                     <button type="submit" class="btn-register w-100">
                         Salvar
@@ -121,7 +130,7 @@
 </div>
 
 <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="/js/gerenciar-personais.js"></script>
+<script src="/js/gerenciar-exercicios.js"></script>
 
 </body>
 </html>
