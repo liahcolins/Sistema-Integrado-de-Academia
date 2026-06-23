@@ -59,6 +59,49 @@ class ItemTreino {
         );
     }
 
+    static atualizar(id, dados, callback) {
+
+        const sql = `
+            UPDATE item_treino
+            SET
+                treino_id = ?,
+                exercicio_id = ?,
+                series = ?,
+                repeticoes = ?,
+                peso = ?,
+                tempo = ?,
+                descanso = ?,
+                instrucoes = ?
+            WHERE id = ?
+        `;
+
+        db.query(
+            sql,
+            [
+                dados.treino_id,
+                dados.exercicio_id,
+                dados.series,
+                dados.repeticoes,
+                dados.peso,
+                dados.tempo,
+                dados.descanso,
+                dados.instrucoes,
+                id
+            ],
+            callback
+        );
+    }
+
+    static excluir(id, callback) {
+
+        const sql = `
+            DELETE FROM item_treino
+            WHERE id = ?
+        `;
+
+        db.query(sql, [id], callback);
+    }
+
 }
 
 module.exports = ItemTreino;

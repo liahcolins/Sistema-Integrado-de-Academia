@@ -15,4 +15,14 @@ router.post(
     ItemTreinoController.criar
 );
 
+router.put(
+    '/:id',
+    ItemTreinoController.atualizar
+);
+
+router.delete(
+    '/:id',
+    ItemTreinoController.excluir
+);
+
 module.exports = router;
