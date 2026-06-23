@@ -7,6 +7,7 @@ const clienteRoutes = require('./routes/clienteRoutes');
 const exercicioRoutes = require('./routes/exercicioRoutes');
 const personalTrainerRoutes = require('./routes/personalTrainerRoutes');
 const administradorRoutes = require('./routes/administradorRoutes');
+const treinoRoutes = require('./routes/treinoRoutes');
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use('/clientes', clienteRoutes);
 app.use('/exercicios', exercicioRoutes);
 app.use('/personal-trainers', personalTrainerRoutes);
 app.use('/administradores', administradorRoutes);
+app.use('/treinos', treinoRoutes);
 
 app.use(
     '/bootstrap',
@@ -75,6 +77,19 @@ app.get('/admin/clientes', (req, res) => {
             'views',
             'admin',
             'clientes.html'
+        )
+    );
+
+});
+
+app.get('/admin/treinos', (req, res) => {
+
+    res.sendFile(
+        path.join(
+            __dirname,
+            'views',
+            'admin',
+            'treinos.html'
         )
     );
 

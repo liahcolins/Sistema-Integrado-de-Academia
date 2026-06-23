@@ -2,7 +2,6 @@
 <html lang="pt-BR">
 
 <head>
-
     <meta charset="UTF-8">
 
     <meta
@@ -10,7 +9,7 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Clientes - FitCore</title>
+    <title>Treinos - FitCore</title>
 
     <link
         rel="stylesheet"
@@ -21,7 +20,6 @@
         rel="stylesheet"
         href="/css/style.css"
     >
-
 </head>
 
 <body>
@@ -36,7 +34,6 @@
 
             <nav>
                 <ul>
-
                     <li>
                         <a href="/">
                             Dashboard
@@ -44,16 +41,13 @@
                     </li>
 
                     <li>
-                        <a
-                            href="/admin/clientes"
-                            class="active"
-                        >
+                        <a href="/admin/clientes">
                             Clientes
                         </a>
                     </li>
 
                     <li>
-                        <a href="/admin/personais">
+                        <a href="#">
                             Personais
                         </a>
                     </li>
@@ -65,7 +59,10 @@
                     </li>
 
                     <li>
-                        <a href="/admin/treinos">
+                        <a
+                            href="/admin/treinos"
+                            class="active"
+                        >
                             Treinos
                         </a>
                     </li>
@@ -75,7 +72,6 @@
                             Matrículas
                         </a>
                     </li>
-
                 </ul>
             </nav>
 
@@ -86,41 +82,35 @@
             <div class="page-header">
 
                 <h1>
-                    Clientes
+                    Treinos
                 </h1>
 
                 <button
                     class="btn btn-danger"
                     data-bs-toggle="modal"
-                    data-bs-target="#modalCliente"
+                    data-bs-target="#modalTreino"
                 >
-                    + Novo Cliente
+                    + Novo Treino
                 </button>
 
             </div>
 
             <div class="table-container">
 
-                <table
-                    class="table table-dark table-hover align-middle"
-                >
+                <table class="table table-dark table-hover align-middle">
 
                     <thead>
-
                         <tr>
-
                             <th>ID</th>
                             <th>Nome</th>
-                            <th>Email</th>
-                            <th>Status</th>
-                            <th>Ações</th>
-
+                            <th>Cliente</th>
+                            <th>Personal</th>
+                            <th>Data</th>
+                            <th>Observações</th>
                         </tr>
-
                     </thead>
 
-                    <tbody id="clientesTable">
-
+                    <tbody id="treinosTable">
                     </tbody>
 
                 </table>
@@ -133,7 +123,7 @@
 
     <div
         class="modal fade"
-        id="modalCliente"
+        id="modalTreino"
         tabindex="-1"
     >
 
@@ -144,7 +134,7 @@
                 <div class="modal-header">
 
                     <h5>
-                        Cadastrar Cliente
+                        Cadastrar Treino
                     </h5>
 
                     <button
@@ -156,54 +146,44 @@
 
                 <div class="modal-body">
 
-                    <form id="clienteForm">
+                    <form id="treinoForm">
 
                         <input
                             type="text"
                             id="nome"
                             class="form-control mb-3"
-                            placeholder="Nome"
+                            placeholder="Nome do treino"
                             required
                         >
 
                         <input
-                            type="email"
-                            id="email"
+                            type="date"
+                            id="data_criacao"
                             class="form-control mb-3"
-                            placeholder="Email"
+                            required
+                        >
+
+                        <textarea
+                            id="observacoes"
+                            class="form-control mb-3"
+                            placeholder="Observações"
+                        ></textarea>
+
+                        <input
+                            type="number"
+                            id="cliente_id"
+                            class="form-control mb-3"
+                            placeholder="ID do cliente"
                             required
                         >
 
                         <input
-                            type="password"
-                            id="senha"
+                            type="number"
+                            id="personal_id"
                             class="form-control mb-3"
-                            placeholder="Senha"
+                            placeholder="ID do personal"
                             required
                         >
-
-                        <select
-                            id="status_matricula"
-                            class="form-control mb-3"
-                            required
-                        >
-                            <option value="">
-                                Status da matrícula
-                            </option>
-
-                            <option value="Ativa">
-                                Ativa
-                            </option>
-
-                            <option value="Inativa">
-                                Inativa
-                            </option>
-
-                            <option value="Pendente">
-                                Pendente
-                            </option>
-
-                        </select>
 
                         <button
                             class="btn btn-danger w-100"
@@ -223,7 +203,7 @@
     </div>
 
     <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="/js/clientes.js"></script>
+    <script src="/js/treinos.js"></script>
 
 </body>
 </html>
