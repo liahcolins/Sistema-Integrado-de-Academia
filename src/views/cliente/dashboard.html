@@ -1,81 +1,169 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard - Cliente</title>
+
+    <title>Dashboard Cliente - FitCore</title>
+
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+
+    <link rel="stylesheet" href="/css/landing.css">
+
     <link rel="stylesheet" href="/css/dashboard-cliente.css">
 </head>
+
 <body>
 
-    <aside class="sidebar">
-        <h2 class="logo">FIT<span>CORE</span></h2>
+    <!-- TOPBAR -->
+
+    <div class="topbar">
+
+        <span>
+            <i class="material-symbols-outlined">location_on</i>
+            São Luís - MA
+        </span>
+
+        <span>
+            <i class="material-symbols-outlined">call</i>
+            (98) 99999-9999
+        </span>
+
+        <span>
+            <i class="material-symbols-outlined">mail</i>
+            contato@fitcore.com
+        </span>
+
+    </div>
+
+    <!-- NAVBAR -->
+
+    <nav class="landing-navbar">
+
+        <h2 class="landing-logo">
+            FIT<span>CORE</span>
+        </h2>
 
         <ul>
-            <li>🏠 Dashboard</li>
-            <li>📋 Meu Treino</li>
-            <li>🎫 Matrícula</li>
-            <li>👤 Meus Dados</li>
+
+            <li>
+                <a
+                    href="/cliente/dashboard"
+                    class="active"
+                >
+                    Dashboard
+                </a>
+            </li>
+
+            <li>
+                <a href="/cliente/meu-treino">
+                    Meu Treino
+                </a>
+            </li>
+
+            <li>
+                <a href="/cliente/minha-matricula">
+                    Matrícula
+                </a>
+            </li>
+
+            <li>
+                <a href="/cliente/evolucao">
+                    Evolução
+                </a>
+            </li>
+
         </ul>
-    </aside>
 
-    <main class="content">
+        <div class="nav-buttons">
+            <button class="btn-login">
+                SAIR
+            </button>
+        </div>
 
-        <header class="topbar">
-            <h1>Olá, Guilherme 👋</h1>
-        </header>
+    </nav>
 
-        <section class="cards">
+    <main class="dashboard-page">
 
-            <div class="card">
-                <h3>MATRÍCULA</h3>
-                <p>Ativa</p>
-            </div>
+        <section class="dashboard-hero">
 
-            <div class="card">
-                <h3>PLANO</h3>
-                <p>Premium</p>
-            </div>
+            <div class="dashboard-content">
 
-            <div class="card">
-                <h3>TREINOS</h3>
-                <p>4 cadastrados</p>
-            </div>
+                <p class="dashboard-mini">
+                    ÁREA DO ALUNO
+                </p>
 
-            <div class="card">
-                <h3>PERSONAL</h3>
-                <p>João Silva</p>
+                <h1>
+                    ACOMPANHE SUA
+                    <br>
+                    <span>EVOLUÇÃO</span>
+                </h1>
+
+                <p>
+                    Consulte seus treinos, acompanhe
+                    seu desempenho e mantenha sua
+                    matrícula sempre atualizada.
+                </p>
+
             </div>
 
         </section>
 
-        <section class="box">
-            <h2>Meu Treino</h2>
+        <section class="cliente-actions">
 
-            <ul class="treinos">
-                <li>Treino A - Peito e Tríceps</li>
-                <li>Treino B - Costas e Bíceps</li>
-                <li>Treino C - Pernas</li>
-                <li>Treino D - Ombros</li>
-            </ul>
-        </section>
+            <a
+                href="/cliente/meu-treino"
+                class="cliente-card"
+            >
+                <h3>Meu Treino</h3>
 
-        <section class="box">
-            <h2>Minha Matrícula</h2>
+                <p>
+                    Visualize seus treinos personalizados.
+                </p>
+            </a>
 
-            <p><strong>Código:</strong> MAT-001</p>
-            <p><strong>Plano:</strong> Premium</p>
-            <p><strong>Status:</strong> Ativa</p>
-        </section>
+            <a
+                href="/cliente/evolucao"
+                class="cliente-card"
+            >
+                <h3>Evolução</h3>
 
-        <section class="box">
-            <h2>Meus Dados</h2>
+                <p>
+                    Acompanhe seu progresso.
+                </p>
+            </a>
 
-            <p><strong>Nome:</strong> Guilherme</p>
-            <p><strong>Email:</strong> guilherme@email.com</p>
-            <p><strong>Telefone:</strong> (98) 99999-9999</p>
+            <a
+                href="/cliente/minha-matricula"
+                class="cliente-card"
+            >
+                <h3>Matrícula</h3>
+
+                <p>
+                    Consulte sua situação atual.
+                </p>
+            </a>
+
+            <a
+                href="/cliente/perfil"
+                class="cliente-card"
+            >
+                <h3>Meu Perfil</h3>
+
+                <p>
+                    Atualize seus dados pessoais.
+                </p>
+            </a>
+
         </section>
 
     </main>

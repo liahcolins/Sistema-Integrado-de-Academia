@@ -82,6 +82,19 @@ app.get('/admin/clientes', (req, res) => {
 
 });
 
+app.get('/cliente/dashboard', (req, res) => {
+
+    res.sendFile(
+        path.join(
+            __dirname,
+            'views',
+            'cliente',
+            'dashboard.html'
+        )
+    );
+
+});
+
 app.get('/admin/treinos', (req, res) => {
 
     res.sendFile(
