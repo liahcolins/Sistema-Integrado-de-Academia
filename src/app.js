@@ -69,17 +69,15 @@ app.get('/admin/dashboard', (req, res) => {
 
 });
 
-app.get('/admin/clientes', (req, res) => {
-
+app.get('/admin/gerenciar-clientes', (req, res) => {
     res.sendFile(
         path.join(
             __dirname,
             'views',
             'admin',
-            'clientes.html'
+            'gerenciar-clientes.html'
         )
     );
-
 });
 
 app.get('/cliente/dashboard', (req, res) => {
@@ -119,6 +117,17 @@ app.get('/admin/treinos', (req, res) => {
         )
     );
 
+});
+
+app.get('/admin/gerenciar-personais', (req, res) => {
+    res.sendFile(
+        path.join(
+            __dirname,
+            'views',
+            'admin',
+            'gerenciar-personais.html'
+        )
+    );
 });
 
 app.listen(PORT, () => {
