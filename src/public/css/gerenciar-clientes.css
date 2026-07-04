@@ -1,0 +1,150 @@
+.clientes-page {
+    min-height: 100vh;
+    background:
+        linear-gradient(rgba(0,0,0,.7), rgba(0,0,0,.75)),
+        url('/img/fundo-academia.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.clientes-content {
+    padding: 170px 90px 50px;
+}
+
+.clientes-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.section-mini {
+    color: #dc2626;
+    font-family: 'Oswald', sans-serif;
+    font-size: 20px;
+}
+
+.clientes-header h1 {
+    color: white;
+    font-size: 72px;
+    font-family: 'Oswald', sans-serif;
+}
+
+.clientes-table-card {
+    background: rgba(20,20,20,0.75);
+    backdrop-filter: blur(8px);
+    border-radius: 20px;
+    padding: 35px 40px;
+}
+
+/* TABELA */
+.clientes-table {
+    width: 100%;
+    color: white;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.clientes-table th,
+.clientes-table td {
+    padding: 22px 18px;
+    vertical-align: middle;
+}
+
+.clientes-table th {
+    color: #dc2626;
+    font-family: 'Oswald', sans-serif;
+    font-size: 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+
+.clientes-table td {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    font-size: 18px;
+}
+
+/* LARGURA DAS COLUNAS */
+.col-id {
+    width: 7%;
+    text-align: center;
+}
+
+.col-nome {
+    width: 32%;
+    text-align: left;
+}
+
+.col-email {
+    width: 27%;
+    text-align: left;
+}
+
+.col-status {
+    width: 14%;
+    text-align: center;
+}
+
+.col-acoes {
+    width: 20%;
+    text-align: center;
+}
+
+/* CENTRALIZA TD CORRESPONDENTE */
+.clientes-table td:nth-child(1),
+.clientes-table td:nth-child(4),
+.clientes-table td:nth-child(5) {
+    text-align: center;
+}
+
+/* BOTÕES */
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+}
+
+.edit-btn,
+.delete-btn {
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+.edit-btn {
+    background: #dc2626;
+}
+
+.edit-btn:hover {
+    transform: translateY(-2px);
+}
+
+.delete-btn {
+    background: #333;
+}
+
+.delete-btn:hover {
+    background: #444;
+}
+
+/* MODAL */
+.modal-fitcore {
+    background: #111;
+    color: white;
+    border: 1px solid #dc2626;
+}
+
+.modal-fitcore input,
+.modal-fitcore select {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 15px;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    color: white;
+    border-radius: 8px;
+}

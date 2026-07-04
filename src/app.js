@@ -71,17 +71,15 @@ app.get('/admin/dashboard', (req, res) => {
 
 });
 
-app.get('/admin/clientes', (req, res) => {
-
+app.get('/admin/gerenciar-clientes', (req, res) => {
     res.sendFile(
         path.join(
             __dirname,
             'views',
             'admin',
-            'clientes.html'
+            'gerenciar-clientes.html'
         )
     );
-
 });
 
 app.get('/cliente/dashboard', (req, res) => {
@@ -92,6 +90,19 @@ app.get('/cliente/dashboard', (req, res) => {
             'views',
             'cliente',
             'dashboard.html'
+        )
+    );
+
+});
+
+app.get('/cliente/meu-treino', (req, res) => {
+
+    res.sendFile(
+        path.join(
+            __dirname,
+            'views',
+            'cliente',
+            'meu-treino.html'
         )
     );
 
@@ -110,6 +121,17 @@ app.get('/admin/treinos', (req, res) => {
 
 });
 
+app.get('/admin/gerenciar-personais', (req, res) => {
+    res.sendFile(
+        path.join(
+            __dirname,
+            'views',
+            'admin',
+            'gerenciar-personais.html'
+        )
+    );
+});
+
 app.listen(PORT, () => {
     console.log(
         `Servidor rodando na porta ${PORT}`
@@ -126,4 +148,15 @@ app.get('/cadastro', (req, res) => {
         )
     );
 
+});
+
+app.get('/admin/gerenciar-exercicios', (req, res) => {
+    res.sendFile(
+        path.join(
+            __dirname,
+            'views',
+            'admin',
+            'gerenciar-exercicios.html'
+        )
+    );
 });

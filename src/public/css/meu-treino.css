@@ -1,0 +1,165 @@
+.treinos-page {
+    background: #000;
+    min-height: 100vh;
+}
+
+/* HERO */
+
+.treinos-hero {
+    position: relative;
+
+    min-height: 100vh;
+
+    background:
+        linear-gradient(
+            rgba(0,0,0,.65),
+            rgba(0,0,0,.75)
+        ),
+        url('/img/fundo-academia.png');
+
+    background-size: cover;
+    background-position: center;
+
+    padding-top: 220px;
+    padding-left: 90px;
+    padding-right: 90px;
+    padding-bottom: 80px;
+}
+
+/* TEXTO */
+
+.treinos-content {
+    max-width: 700px;
+}
+
+.treinos-mini {
+    color: #dc2626;
+
+    font-family: 'Oswald', sans-serif;
+
+    font-size: 20px;
+
+    margin-bottom: 20px;
+}
+
+.treinos-content h1 {
+    color: white;
+
+    font-family: 'Oswald', sans-serif;
+
+    font-size: clamp(50px, 6vw, 85px);
+
+    line-height: .95;
+}
+
+.treinos-content h1 span {
+    color: #dc2626;
+}
+
+.treinos-content p {
+    color: #ddd;
+
+    font-size: 20px;
+
+    margin-top: 25px;
+
+    line-height: 1.6;
+}
+
+/* GRID DE TREINOS */
+
+.treinos-cards {
+
+    margin-top: 60px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(280px, 1fr));
+
+    gap: 25px;
+}
+
+/* CARD */
+
+.treino-card {
+
+    background: rgba(20,20,20,.70);
+
+    backdrop-filter: blur(8px);
+
+    border-left: 4px solid #dc2626;
+
+    border-radius: 20px;
+
+    padding: 30px;
+
+    text-decoration: none;
+
+    transition: .3s;
+
+    min-height: 300px;
+}
+
+.treino-card:hover {
+
+    transform: translateY(-5px);
+
+    background: rgba(30,30,30,.85);
+}
+
+.treino-card h3 {
+
+    color: #dc2626;
+
+    font-family: 'Oswald', sans-serif;
+
+    font-size: 24px;
+
+    margin-bottom: 10px;
+}
+
+.treino-card p {
+
+    color: #ddd;
+
+    font-size: 16px;
+
+    margin-bottom: 18px;
+}
+
+/* EXERCÍCIOS */
+
+.treino-card ul {
+
+    padding-left: 20px;
+
+    margin: 0;
+}
+
+.treino-card li {
+
+    color: #ccc;
+
+    margin-bottom: 8px;
+
+    font-size: 15px;
+}
+
+/* RESPONSIVO */
+
+@media (max-width: 768px) {
+
+    .treinos-hero {
+
+        padding-left: 30px;
+        padding-right: 30px;
+
+        padding-top: 180px;
+    }
+
+    .treinos-content h1 {
+
+        font-size: 58px;
+    }
+}

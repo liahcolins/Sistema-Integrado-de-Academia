@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Gerenciar Personais - FitCore</title>
+
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+
+    <link rel="stylesheet" href="/css/landing.css">
+    <link rel="stylesheet" href="/css/gerenciar-clientes.css">
+</head>
+<body>
+
+<div class="topbar">
+    <span>
+        <i class="material-symbols-outlined">location_on</i>
+        São Luís - MA
+    </span>
+
+    <span>
+        <i class="material-symbols-outlined">call</i>
+        (98) 99999-9999
+    </span>
+
+    <span>
+        <i class="material-symbols-outlined">mail</i>
+        contato@fitcore.com
+    </span>
+</div>
+
+<nav class="landing-navbar">
+    <h2 class="landing-logo">FIT<span>CORE</span></h2>
+
+    <ul>
+        <li><a href="/admin/dashboard">Dashboard</a></li>
+        <li><a href="/admin/gerenciar-clientes">Clientes</a></li>
+        <li><a class="active" href="/admin/gerenciar-personais">Personais</a></li>
+        <li><a href="/admin/gerenciar-exercicios">Exercícios</a></li>
+        <li><a href="/admin/treinos">Treinos</a></li>
+        <li><a href="#">Matrículas</a></li>
+    </ul>
+
+    <div class="nav-buttons">
+        <button class="btn-login">SAIR</button>
+    </div>
+</nav>
+
+<section class="clientes-page">
+    <div class="clientes-content">
+
+        <div class="clientes-header">
+            <div>
+                <p class="section-mini">GERENCIAMENTO</p>
+                <h1>Personais</h1>
+            </div>
+
+            <button
+                class="btn-register"
+                data-bs-toggle="modal"
+                data-bs-target="#modalPersonal"
+            >
+                + Novo Personal
+            </button>
+        </div>
+
+        <div class="clientes-table-card">
+
+            <!-- AQUI ESTAVA O ERRO -->
+            <table class="clientes-table">
+                <thead>
+                    <tr>
+                        <th class="col-id">ID</th>
+                        <th class="col-nome">Nome</th>
+                        <th class="col-email">Email</th>
+                        <th class="col-status">CREF</th>
+                        <th class="col-acoes">Ações</th>
+                    </tr>
+                </thead>
+
+                <tbody id="personaisTable"></tbody>
+            </table>
+
+        </div>
+    </div>
+</section>
+
+<div class="modal fade" id="modalPersonal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content modal-fitcore">
+
+            <div class="modal-header">
+                <h5>Cadastrar Personal</h5>
+
+                <button
+                    class="btn-close btn-close-white"
+                    data-bs-dismiss="modal"
+                ></button>
+            </div>
+
+            <div class="modal-body">
+                <form id="personalForm">
+                    <input type="text" id="nome" placeholder="Nome" required>
+                    <input type="email" id="email" placeholder="Email" required>
+                    <input type="password" id="senha" placeholder="Senha" required>
+                    <input type="text" id="cref" placeholder="CREF" required>
+
+                    <button type="submit" class="btn-register w-100">
+                        Salvar
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/js/gerenciar-personais.js"></script>
+
+</body>
+</html>
