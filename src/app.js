@@ -9,6 +9,8 @@ const personalTrainerRoutes = require('./routes/personalTrainerRoutes');
 const administradorRoutes = require('./routes/administradorRoutes');
 const treinoRoutes = require('./routes/treinoRoutes');
 const matriculaRoutes = require('./routes/matriculaRoutes');
+const itemTreinoRoutes = require('./routes/itemTreinoRoutes');
+
 
 const app = express();
 
@@ -26,6 +28,8 @@ app.use('/personal-trainers', personalTrainerRoutes);
 app.use('/administradores', administradorRoutes);
 app.use('/treinos', treinoRoutes);
 app.use('/matriculas', matriculaRoutes);
+app.use('/itens-treino', itemTreinoRoutes);
+
 
 app.use(
     '/bootstrap',
