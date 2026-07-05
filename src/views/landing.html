@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard Admin - FitCore</title>
+    <title>FitCore</title>
 
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
 
@@ -11,101 +11,224 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
 
-    <!-- CSS da landing (topbar + navbar) -->
+    <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+    />
+
     <link rel="stylesheet" href="/css/landing.css">
-
-    <!-- CSS exclusivo da dashboard -->
-    <link rel="stylesheet" href="/css/dashboard.css">
 </head>
+
 <body>
 
-    <!-- TOPBAR IGUAL DA LANDING -->
     <div class="topbar">
+
         <span>
-            <i class="material-symbols-outlined">location_on</i>
+            <span class="material-symbols-outlined">
+                location_on
+            </span>
+
             São Luís - MA
         </span>
 
         <span>
-            <i class="material-symbols-outlined">call</i>
+            <span class="material-symbols-outlined">
+                call
+            </span>
+
             (98) 99999-9999
         </span>
 
         <span>
-            <i class="material-symbols-outlined">mail</i>
+            <span class="material-symbols-outlined">
+                mail
+            </span>
+
             contato@fitcore.com
         </span>
+
     </div>
 
-    <!-- NAVBAR IGUAL DA LANDING -->
     <nav class="landing-navbar">
-        <h2 class="landing-logo">FIT<span>CORE</span></h2>
+
+        <h2 class="landing-logo">
+            FIT<span>CORE</span>
+        </h2>
 
         <ul>
-            <li><a class="active" href="/admin/dashboard">Dashboard</a></li>
-            <li><a href="/admin/clientes">Clientes</a></li>
-            <li><a href="#">Personais</a></li>
-            <li><a href="#">Exercícios</a></li>
-            <li><a href="/admin/treinos">Treinos</a></li>
-            <li><a href="#">Matrículas</a></li>
+
+            <li>
+                <a href="#" class="active">
+                    Home
+                </a>
+            </li>
+
+            <li>
+                <a href="#">
+                    Sobre
+                </a>
+            </li>
+
+            <li>
+                <a href="#">
+                    Planos
+                </a>
+            </li>
+
+            <li>
+                <a href="#">
+                    Contato
+                </a>
+            </li>
+
         </ul>
 
         <div class="nav-buttons">
-            <button class="btn-login">SAIR</button>
+
+            <button class="btn-login">
+                ENTRAR
+            </button>
+
+            <button class="btn-register">
+                CADASTRE-SE
+            </button>
+
         </div>
+
     </nav>
 
-    <main class="dashboard-page">
-        <section class="dashboard-hero">
-            <div class="dashboard-overlay"></div>
+    <section class="hero">
 
-            <div class="dashboard-content">
-                <p class="dashboard-mini">ÁREA ADMINISTRATIVA</p>
+        <div class="hero-overlay"></div>
 
-                <h1>
-                    GERENCIE TODA A<br>
-                    <span>FITCORE</span>
-                </h1>
+        <div class="hero-content">
 
-                <p>
-                    Controle clientes, treinos, matrículas,
-                    personais e exercícios em um só lugar.
-                </p>
+            <p class="hero-mini">
+                BEM-VINDO A FITCORE
+            </p>
+
+            <h1 class="hero-title">
+
+                SUPERE SEUS LIMITES
+
+                <br>
+
+                <span class="red-line">
+                    TREINE COM A FITCORE
+                </span>
+
+            </h1>
+
+            <p class="hero-description">
+
+                Tecnologia, acompanhamento profissional
+                e treinos personalizados para maximizar seus resultados.
+
+            </p>
+
+            <div class="hero-buttons">
+
+                <button class="btn-register">
+                    CADASTRE-SE
+                </button>
+
+                <button class="btn-login">
+                    ENTRAR
+                </button>
+
             </div>
-        </section>
 
-        <section class="admin-actions">
+        </div>
 
-            <a href="/admin/clientes" class="admin-card">
-                <h3>Clientes</h3>
-                <p>Gerencie cadastros de alunos.</p>
-            </a>
+    </section>
 
-            <a href="#" class="admin-card">
-                <h3>Personais</h3>
-                <p>Gerencie personal trainers.</p>
-            </a>
+    <section class="about-section">
 
-            <a href="#" class="admin-card">
-                <h3>Exercícios</h3>
-                <p>Cadastre exercícios.</p>
-            </a>
+        <div class="about-text">
 
-            <a href="/admin/treinos" class="admin-card">
-                <h3>Treinos</h3>
-                <p>Monte e organize treinos.</p>
-            </a>
+            <p class="section-mini">
+                SOBRE NÓS
+            </p>
 
-            <a href="#" class="admin-card">
-                <h3>Matrículas</h3>
-                <p>Controle matrículas ativas.</p>
-            </a>
+            <h2>
+                Conheça nosso trabalho
+            </h2>
 
-        </section>
-    </main>
+            <p>
+                A FitCore combina tecnologia, gestão e
+                acompanhamento profissional para transformar
+                a experiência dentro da academia.
+            </p>
+
+            <p>
+                Nossa plataforma conecta alunos, personal
+                trainers e administradores em um sistema
+                único e eficiente.
+            </p>
+
+        </div>
+
+        <div class="about-image">
+
+            <img src="/img/fundo-academia.png">
+
+        </div>
+
+    </section>
+
+    <section class="features">
+
+        <div class="feature-box">
+
+            <h4>
+                Treinos Personalizados
+            </h4>
+
+            <p>
+                Programas ajustados aos seus objetivos.
+            </p>
+
+        </div>
+
+        <div class="feature-box">
+
+            <h4>
+                Profissionais Qualificados
+            </h4>
+
+            <p>
+                Equipe pronta para ajudar.
+            </p>
+
+        </div>
+
+        <div class="feature-box">
+
+            <h4>
+                Acompanhamento Completo
+            </h4>
+
+            <p>
+                Monitore sua evolução.
+            </p>
+
+        </div>
+
+        <div class="feature-box">
+
+            <h4>
+                Aulas Diversificadas
+            </h4>
+
+            <p>
+                Modalidades para todos.
+            </p>
+
+        </div>
+
+    </section>
 
 </body>
 </html>
