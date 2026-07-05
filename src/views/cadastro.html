@@ -5,12 +5,11 @@
     <title>Cadastro - FitCore</title>
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
 
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
 
     <link rel="stylesheet" href="/css/cadastro.css">
-
 </head>
 <body>
 
@@ -42,15 +41,15 @@
 
             <h2>CRIAR CONTA</h2>
 
-            <form>
+            <form id="registerForm">
 
-                <input type="text" placeholder="Nome Completo">
+                <input type="text" id="nome" placeholder="Nome Completo" required>
 
-                <input type="email" placeholder="Email">
+                <input type="email" id="email" placeholder="Email" required>
 
-                <input type="password" placeholder="Senha">
+                <input type="password" id="senha" placeholder="Senha" required>
 
-                <input type="password" placeholder="Confirmar Senha">
+                <input type="password" id="confirmar-senha" placeholder="Confirmar Senha" required>
 
                 <button type="submit">
                     CADASTRAR
@@ -68,6 +67,58 @@
     </div>
 
 </div>
+
+<script>
+    document.getElementById('registerForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const nome = document.getElementById('nome').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const senha = document.getElementById('senha').value;
+        const confirmarSenha = document.getElementById('confirmar-senha').value;
+        
+        if (senha !== confirmarSenha) {
+            alert('A senha e a confirmação de senha não coincidem!');
+            return;
+        }
+        
+        try {
+            const response = await fetch('/clientes', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    nome,
+                    email,
+                    senha,
+                    status_matricula: 'Pendente'
+                })
+            });
+            
+            const data = await response.json();
+            
+            if (response.ok) {
+                const card = document.querySelector('.register-card');
+                card.innerHTML = `
+                    <div style="text-align: center; color: white;">
+                        <span class="material-symbols-outlined" style="font-size: 64px; color: #dc2626; margin-bottom: 20px; display: inline-block;">check_circle</span>
+                        <h2 style="font-size: 32px; margin-bottom: 15px; font-family: 'Oswald', sans-serif;">CADASTRO REALIZADO!</h2>
+                        <p style="color: #ccc; font-size: 18px; line-height: 1.6;">Sua conta foi criada com sucesso. Você será redirecionado para a tela de login...</p>
+                    </div>
+                `;
+                setTimeout(() => {
+                    window.location.href = '/login';
+                }, 2500);
+            } else {
+                alert(data.erro || 'Erro ao realizar cadastro.');
+            }
+        } catch (error) {
+            console.error('Erro:', error);
+            alert('Ocorreu um erro de rede. Tente novamente mais tarde.');
+        }
+    });
+</script>
 
 </body>
 </html>

@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 
-require('./config/database');
+const db = require('./config/database');
 
 const clienteRoutes = require('./routes/clienteRoutes');
 const exercicioRoutes = require('./routes/exercicioRoutes');
@@ -14,7 +14,7 @@ const itemTreinoRoutes = require('./routes/itemTreinoRoutes');
 
 const app = express();
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
@@ -154,6 +154,82 @@ app.get('/cadastro', (req, res) => {
 
 });
 
+app.get('/login', (req, res) => {
+    res.sendFile(
+        path.join(
+            __dirname,
+            'views',
+            'auth',
+            'login.html'
+        )
+    );
+});
+
+app.post('/api/login', (req, res) => {
+    const { email, senha } = req.body;
+
+    if (!email || !senha) {
+        return res.status(400).json({ erro: 'E-mail e senha são obrigatórios' });
+    }
+
+    // 1. Verificar na tabela administrador
+    const sqlAdmin = 'SELECT id, nome, email FROM administrador WHERE email = ? AND senha = ?';
+    db.query(sqlAdmin, [email, senha], (err, resultsAdmin) => {
+        if (err) {
+            console.error('Erro ao buscar admin:', err);
+            return res.status(500).json({ erro: 'Erro interno do servidor' });
+        }
+
+        if (resultsAdmin.length > 0) {
+            return res.json({
+                sucesso: true,
+                perfil: 'admin',
+                usuario: resultsAdmin[0],
+                redirecionar: '/admin/dashboard'
+            });
+        }
+
+        // 2. Verificar na tabela personal_trainer
+        const sqlPersonal = 'SELECT id, nome, email FROM personal_trainer WHERE email = ? AND senha = ?';
+        db.query(sqlPersonal, [email, senha], (err, resultsPersonal) => {
+            if (err) {
+                console.error('Erro ao buscar personal:', err);
+                return res.status(500).json({ erro: 'Erro interno do servidor' });
+            }
+
+            if (resultsPersonal.length > 0) {
+                return res.json({
+                    sucesso: true,
+                    perfil: 'personal',
+                    usuario: resultsPersonal[0],
+                    redirecionar: '/personal-trainer/dashboard'
+                });
+            }
+
+            // 3. Verificar na tabela cliente
+            const sqlCliente = 'SELECT id, nome, email, status_matricula FROM cliente WHERE email = ? AND senha = ?';
+            db.query(sqlCliente, [email, senha], (err, resultsCliente) => {
+                if (err) {
+                    console.error('Erro ao buscar cliente:', err);
+                    return res.status(500).json({ erro: 'Erro interno do servidor' });
+                }
+
+                if (resultsCliente.length > 0) {
+                    return res.json({
+                        sucesso: true,
+                        perfil: 'cliente',
+                        usuario: resultsCliente[0],
+                        redirecionar: '/cliente/dashboard'
+                    });
+                }
+
+                return res.status(401).json({ erro: 'E-mail ou senha incorretos' });
+            });
+        });
+    });
+});
+
+
 app.get('/admin/gerenciar-exercicios', (req, res) => {
     res.sendFile(
         path.join(
@@ -164,3 +240,4 @@ app.get('/admin/gerenciar-exercicios', (req, res) => {
         )
     );
 });
+

@@ -291,3 +291,350 @@ body {
     }
 
 }
+
+/* SMOOTH SCROLL */
+html {
+    scroll-behavior: smooth;
+}
+
+/* NAVBAR BUTTON CORRECTIONS */
+.landing-navbar a {
+    display: inline-block;
+    text-decoration: none;
+}
+
+.btn-login, .btn-register {
+    text-decoration: none !important;
+    display: inline-block;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.btn-login:hover {
+    border-color: #dc2626;
+    background: rgba(220, 38, 38, 0.1);
+}
+
+.btn-register:hover {
+    background: #ef4444;
+    box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
+}
+
+/* NAVBAR LINKS MICRO-ANIMATION */
+.landing-navbar a::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -8px;
+    width: 0;
+    height: 3px;
+    background: #dc2626;
+    transition: width 0.3s ease, left 0.3s ease;
+}
+
+.landing-navbar a:hover::after,
+.landing-navbar a.active::after {
+    width: 100%;
+    left: 0;
+}
+
+/* PLANOS SECTION */
+.plans-section {
+    padding: 100px 90px;
+    background: #090909;
+    text-align: center;
+}
+
+.plans-section .section-mini {
+    color: #dc2626;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+}
+
+.plans-section .section-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: 46px;
+    color: white;
+    margin-bottom: 60px;
+}
+
+.plans-grid {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+}
+
+.plan-card {
+    background: #121212;
+    border: 1px solid #222;
+    border-radius: 16px;
+    padding: 40px 30px;
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.plan-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+.plan-card.recommended {
+    border: 2px solid #dc2626;
+    background: #161616;
+    transform: scale(1.03);
+    box-shadow: 0 10px 30px rgba(220, 38, 38, 0.15);
+}
+
+.plan-card.recommended:hover {
+    transform: scale(1.03) translateY(-10px);
+    box-shadow: 0 15px 35px rgba(220, 38, 38, 0.25);
+}
+
+.recommended-badge {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #dc2626;
+    color: white;
+    padding: 6px 20px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.plan-card h3 {
+    font-family: 'Oswald', sans-serif;
+    color: white;
+    font-size: 28px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+.plan-card .price {
+    font-family: 'Oswald', sans-serif;
+    font-size: 42px;
+    color: #dc2626;
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+
+.plan-card .price span {
+    font-size: 18px;
+    color: #888;
+    font-weight: 400;
+}
+
+.plan-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 40px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    text-align: left;
+    flex-grow: 1;
+}
+
+.plan-card ul li {
+    color: #ccc;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.plan-card ul li::before {
+    content: '✓';
+    color: #dc2626;
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.btn-plan {
+    display: block;
+    background: transparent;
+    color: white;
+    border: 1px solid #dc2626;
+    padding: 12px 0;
+    border-radius: 6px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.plan-card.recommended .btn-plan {
+    background: #dc2626;
+    border-color: #dc2626;
+}
+
+.btn-plan:hover {
+    background: #dc2626;
+    box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
+}
+
+.plan-card.recommended .btn-plan:hover {
+    background: #ef4444;
+}
+
+/* CONTATO SECTION */
+.contact-section {
+    padding: 100px 90px;
+    background: #050505;
+}
+
+.contact-container {
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 80px;
+    align-items: flex-start;
+}
+
+.contact-info {
+    flex: 1;
+}
+
+.contact-info .section-mini {
+    color: #dc2626;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+}
+
+.contact-info h2 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 46px;
+    color: white;
+    margin-bottom: 25px;
+    line-height: 1.1;
+}
+
+.contact-desc {
+    color: #aaa;
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 40px;
+}
+
+.info-items {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.info-item .material-symbols-outlined {
+    background: rgba(220, 38, 38, 0.1);
+    color: #dc2626;
+    font-size: 32px;
+    padding: 15px;
+    border-radius: 12px;
+}
+
+.info-item h4 {
+    color: white;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.info-item p {
+    color: #ccc;
+    font-size: 15px;
+}
+
+.contact-form-container {
+    flex: 1;
+    background: #111;
+    border: 1px solid #222;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.contact-form input,
+.contact-form textarea {
+    background: #181818;
+    border: 1px solid #333;
+    border-radius: 8px;
+    color: white;
+    padding: 15px 18px;
+    font-size: 15px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    border-color: #dc2626;
+    box-shadow: 0 0 10px rgba(220, 38, 38, 0.2);
+}
+
+.btn-submit {
+    background: #dc2626;
+    border: none;
+    color: white;
+    padding: 16px;
+    border-radius: 8px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-submit:hover {
+    background: #ef4444;
+    box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
+}
+
+/* RESPONSIVIDADE ADICIONAL */
+@media (max-width: 992px) {
+    .plans-grid {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .plan-card.recommended {
+        transform: none;
+    }
+    .plan-card.recommended:hover {
+        transform: translateY(-10px);
+    }
+    
+    .contact-container {
+        flex-direction: column;
+        gap: 50px;
+    }
+    
+    .plans-section,
+    .contact-section {
+        padding: 60px 40px;
+    }
+}
