@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="/css/landing.css">
 </head>
 
-<body>
+<body id="home">
 
     <div class="topbar">
 
@@ -60,25 +60,25 @@
         <ul>
 
             <li>
-                <a href="#" class="active">
+                <a href="#home" class="active">
                     Home
                 </a>
             </li>
 
             <li>
-                <a href="#">
+                <a href="#sobre">
                     Sobre
                 </a>
             </li>
 
             <li>
-                <a href="#">
+                <a href="#planos">
                     Planos
                 </a>
             </li>
 
             <li>
-                <a href="#">
+                <a href="#contato">
                     Contato
                 </a>
             </li>
@@ -87,13 +87,13 @@
 
         <div class="nav-buttons">
 
-            <button class="btn-login">
+            <a href="/login" class="btn-login">
                 ENTRAR
-            </button>
+            </a>
 
-            <button class="btn-register">
+            <a href="/cadastro" class="btn-register">
                 CADASTRE-SE
-            </button>
+            </a>
 
         </div>
 
@@ -130,13 +130,13 @@
 
             <div class="hero-buttons">
 
-                <button class="btn-register">
+                <a href="/cadastro" class="btn-register">
                     CADASTRE-SE
-                </button>
+                </a>
 
-                <button class="btn-login">
+                <a href="/login" class="btn-login">
                     ENTRAR
-                </button>
+                </a>
 
             </div>
 
@@ -144,7 +144,7 @@
 
     </section>
 
-    <section class="about-section">
+    <section id="sobre" class="about-section">
 
         <div class="about-text">
 
@@ -230,5 +230,134 @@
 
     </section>
 
+    <section id="planos" class="plans-section">
+
+        <p class="section-mini">
+            NOSSOS PLANOS
+        </p>
+
+        <h2 class="section-title">
+            ESCOLHA O PLANO IDEAL PARA VOCÊ
+        </h2>
+
+        <div class="plans-grid">
+
+            <div class="plan-card">
+                <h3>Plano Bronze</h3>
+                <div class="price">R$ 89,90<span>/mês</span></div>
+                <ul>
+                    <li>Acesso à área de musculação</li>
+                    <li>Avaliação física trimestral</li>
+                    <li>Acesso ao app FitCore</li>
+                </ul>
+                <a href="/cadastro" class="btn-plan">COMEÇAR AGORA</a>
+            </div>
+
+            <div class="plan-card recommended">
+                <div class="recommended-badge">MAIS POPULAR</div>
+                <h3>Plano Gold</h3>
+                <div class="price">R$ 149,90<span>/mês</span></div>
+                <ul>
+                    <li>Acesso livre a todas as áreas</li>
+                    <li>Aulas de ginástica e lutas</li>
+                    <li>Consultoria com Personal Trainer</li>
+                    <li>Avaliação física mensal</li>
+                    <li>Aplicativo FitCore Premium</li>
+                </ul>
+                <a href="/cadastro" class="btn-plan">COMEÇAR AGORA</a>
+            </div>
+
+            <div class="plan-card">
+                <h3>Plano Platinum</h3>
+                <div class="price">R$ 229,90<span>/mês</span></div>
+                <ul>
+                    <li>Tudo do Plano Gold</li>
+                    <li>Acompanhamento nutricional</li>
+                    <li>Acesso para 1 convidado</li>
+                    <li>Acesso a todas as unidades</li>
+                </ul>
+                <a href="/cadastro" class="btn-plan">COMEÇAR AGORA</a>
+            </div>
+
+        </div>
+
+    </section>
+
+    <section id="contato" class="contact-section">
+
+        <div class="contact-container">
+
+            <div class="contact-info">
+
+                <p class="section-mini">
+                    FALE CONOSCO
+                </p>
+
+                <h2>
+                    ENTRE EM CONTATO COM A FITCORE
+                </h2>
+
+                <p class="contact-desc">
+                    Tem alguma dúvida, crítica ou sugestão? Envie uma mensagem e nossa equipe responderá o mais rápido possível.
+                </p>
+
+                <div class="info-items">
+
+                    <div class="info-item">
+                        <span class="material-symbols-outlined">call</span>
+                        <div>
+                            <h4>Telefone</h4>
+                            <p>(98) 99999-9999</p>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <span class="material-symbols-outlined">mail</span>
+                        <div>
+                            <h4>E-mail</h4>
+                            <p>contato@fitcore.com</p>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <span class="material-symbols-outlined">location_on</span>
+                        <div>
+                            <h4>Localização</h4>
+                            <p>Av. dos Portugueses, 1966 - São Luís - MA</p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="contact-form-container">
+
+                <form class="contact-form">
+                    <input type="text" placeholder="Nome Completo" required>
+                    <input type="email" placeholder="Seu E-mail" required>
+                    <input type="tel" placeholder="Telefone / WhatsApp">
+                    <textarea placeholder="Sua Mensagem" rows="5" required></textarea>
+                    <button type="submit" class="btn-submit">ENVIAR MENSAGEM</button>
+                </form>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- JavaScript para atualizar classe ativa na navbar ao clicar -->
+    <script>
+        document.querySelectorAll('.landing-navbar a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (this.getAttribute('href').startsWith('#')) {
+                    document.querySelectorAll('.landing-navbar a').forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
+
