@@ -1,4 +1,4 @@
-# FitCore — Sistema Integrado de Gestão de Academia
+# FitCore - Sistema Integrado de Gestão de Academia
 
 Projeto acadêmico desenvolvido na disciplina **Projeto e Desenvolvimento de Software**, da **Universidade Federal do Maranhão (UFMA)**.
 
@@ -291,5 +291,5 @@ O projeto está em evolução e possui pontos técnicos planejados para melhoria
 ## Informações acadêmicas
 
 - **Disciplina:** Projeto e Desenvolvimento de Software;
-- **Instituição:** Universidade Federal do Maranhão — UFMA;
+- **Instituição:** Universidade Federal do Maranhão - UFMA;
 - **Professor:** Davi Viana dos Santos.
