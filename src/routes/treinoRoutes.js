@@ -9,4 +9,8 @@ router.get('/', TreinoController.listar);
 
 router.post('/', TreinoController.criar);
 
+router.put('/:id', TreinoController.atualizar);
+
+router.delete('/:id', TreinoController.excluir);
+
 module.exports = router;

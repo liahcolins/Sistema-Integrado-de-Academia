@@ -43,6 +43,43 @@ class Treino {
         );
     }
 
+
+    static atualizar(id, dados, callback) {
+
+        const sql = `
+            UPDATE treino
+            SET
+                nome = ?,
+                data_criacao = ?,
+                observacoes = ?,
+                cliente_id = ?,
+                personal_id = ?
+            WHERE id = ?
+        `;
+
+        db.query(
+            sql,
+            [
+                dados.nome,
+                dados.data_criacao,
+                dados.observacoes,
+                dados.cliente_id,
+                dados.personal_id,
+                id
+            ],
+            callback
+        );
+    }
+
+    static excluir(id, callback) {
+
+        const sql = `
+            DELETE FROM treino
+            WHERE id = ?
+        `;
+
+        db.query(sql, [id], callback);
+    }
 }
 
 module.exports = Treino;
