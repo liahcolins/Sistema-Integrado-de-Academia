@@ -3,23 +3,18 @@
 
 <head>
     <meta charset="UTF-8">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meus Treinos - FitCore</title>
 
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&display=swap"
-        rel="stylesheet">
-
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
 
     <!-- CSS base (topbar + navbar) -->
     <link rel="stylesheet" href="/css/landing.css">
-
     <!-- CSS da tela -->
     <link rel="stylesheet" href="/css/meu-treino.css">
 </head>
@@ -28,7 +23,6 @@
 
     <!-- TOPBAR -->
     <div class="topbar">
-
         <span>
             <i class="material-symbols-outlined">location_on</i>
             São Luís - MA
@@ -43,12 +37,10 @@
             <i class="material-symbols-outlined">mail</i>
             contato@fitcore.com
         </span>
-
     </div>
 
     <!-- NAVBAR -->
     <nav class="landing-navbar">
-
         <h2 class="landing-logo">FIT<span>CORE</span></h2>
 
         <ul>
@@ -59,70 +51,222 @@
         </ul>
 
         <div class="nav-buttons">
-            <button class="btn-login">SAIR</button>
+            <button class="btn-login" onclick="logout()">SAIR</button>
         </div>
-
     </nav>
 
     <!-- HERO -->
     <main class="treinos-page">
-
         <section class="treinos-hero">
 
             <div class="treinos-content">
-
-                <p class="treinos-mini">
-                    SEUS TREINOS
-                </p>
-
-                <h1>
-                    ACOMPANHE SUA
-                    <br>
-                    <span>ROTINA</span>
-                </h1>
-
-                <p>
-                    Veja seus treinos personalizados,
-                    séries, cargas e evolução semanal.
-                </p>
-
+                <p class="treinos-mini">SEUS TREINOS</p>
+                <h1>ACOMPANHE SUA <br><span>ROTINA</span></h1>
+                <p>Veja seus treinos personalizados, séries, cargas e evolução semanal.</p>
             </div>
 
-            <!-- CARDS -->
+            <!-- STATUS DE APROVAÇÃO -->
+            <div class="approval-banner" id="approvalBanner">
+                <div class="banner-status-info">
+                    <span class="material-symbols-outlined status-icon">info</span>
+                    <div>
+                        <h4 id="approvalStatusTitle">Rotina Pendente de Aprovação</h4>
+                        <p id="approvalStatusDesc">Analise a lista de exercícios abaixo. Se estiver de acordo, clique em aprovar para confirmar.</p>
+                    </div>
+                </div>
+                <button class="btn-approve" id="btnApprove" onclick="aprovarRotina()">Aprovar Rotina</button>
+            </div>
+
+            <!-- CARDS DE TREINO -->
             <div class="treinos-cards">
 
                 <div class="treino-card">
-                    <h3>Treino A</h3>
-                    <p>Peito + tríceps</p>
-                     <ul>
-                        <li>Supino reto</li>
-                        <li>Supino inclinado</li>
-                        <li>Crucifixo</li>
-                        <li>Tríceps corda</li>
-                    </ul>
+                    <div class="card-header-treino">
+                        <h3>Treino A</h3>
+                        <span class="muscle-tag">Peito + Tríceps</span>
+                    </div>
+                    
+                    <div class="exercise-list">
+                        <div class="exercise-row">
+                            <span class="exercise-name">Supino reto</span>
+                            <span class="exercise-params">4x12 | 50kg</span>
+                        </div>
+                        <div class="exercise-row">
+                            <span class="exercise-name">Supino inclinado</span>
+                            <span class="exercise-params">4x10 | 40kg</span>
+                        </div>
+                        <div class="exercise-row">
+                            <span class="exercise-name">Crucifixo</span>
+                            <span class="exercise-params">3x12 | 14kg</span>
+                        </div>
+                        <div class="exercise-row">
+                            <span class="exercise-name">Tríceps corda</span>
+                            <span class="exercise-params">4x12 | 20kg</span>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="treino-card">
-                    <h3>Treino B</h3>
-                    <p>Costas + bíceps</p>
+                    <div class="card-header-treino">
+                        <h3>Treino B</h3>
+                        <span class="muscle-tag">Costas + Bíceps</span>
+                    </div>
+                    
+                    <div class="exercise-list">
+                        <div class="exercise-row">
+                            <span class="exercise-name">Puxada alta</span>
+                            <span class="exercise-params">4x12 | 45kg</span>
+                        </div>
+                        <div class="exercise-row">
+                            <span class="exercise-name">Remada curvada</span>
+                            <span class="exercise-params">4x10 | 35kg</span>
+                        </div>
+                        <div class="exercise-row">
+                            <span class="exercise-name">Rosca direta</span>
+                            <span class="exercise-params">3x12 | 20kg</span>
+                        </div>
+                        <div class="exercise-row">
+                            <span class="exercise-name">Rosca martelo</span>
+                            <span class="exercise-params">4x10 | 12kg</span>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="treino-card">
-                    <h3>Treino C</h3>
-                    <p>Pernas completo</p>
+                    <div class="card-header-treino">
+                        <h3>Treino C</h3>
+                        <span class="muscle-tag">Pernas Completo</span>
+                    </div>
+                    
+                    <div class="exercise-list">
+                        <div class="exercise-row">
+                            <span class="exercise-name">Agachamento livre</span>
+                            <span class="exercise-params">4x10 | 60kg</span>
+                        </div>
+                        <div class="exercise-row">
+                            <span class="exercise-name">Leg press 45º</span>
+                            <span class="exercise-params">4x12 | 120kg</span>
+                        </div>
+                        <div class="exercise-row">
+                            <span class="exercise-name">Cadeira extensora</span>
+                            <span class="exercise-params">3x12 | 50kg</span>
+                        </div>
+                        <div class="exercise-row">
+                            <span class="exercise-name">Mesa flexora</span>
+                            <span class="exercise-params">4x10 | 30kg</span>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="treino-card">
-                    <h3>Cardio</h3>
-                    <p>Condicionamento</p>
+                    <div class="card-header-treino">
+                        <h3>Cardio</h3>
+                        <span class="muscle-tag">Condicionamento</span>
+                    </div>
+                    
+                    <div class="exercise-list">
+                        <div class="exercise-row">
+                            <span class="exercise-name">Esteira</span>
+                            <span class="exercise-params">20 min | Vel. 9</span>
+                        </div>
+                        <div class="exercise-row">
+                            <span class="exercise-name">Bicicleta</span>
+                            <span class="exercise-params">15 min | Carga 5</span>
+                        </div>
+                        <div class="exercise-row">
+                            <span class="exercise-name">Elíptico</span>
+                            <span class="exercise-params">10 min | Carga 6</span>
+                        </div>
+                    </div>
                 </div>
 
             </div>
 
-        </section>
+            <!-- FORMULÁRIO DE SOLICITAÇÃO -->
+            <div class="request-workout-section">
+                <div class="request-card">
+                    <div class="request-header">
+                        <span class="material-symbols-outlined">edit_note</span>
+                        <h3>Solicitar Novo Treino</h3>
+                    </div>
+                    <p>Gostaria de mudar o foco dos treinos ou solicitar ajustes? Envie uma solicitação para o seu Personal Trainer.</p>
+                    
+                    <form id="requestWorkoutForm" onsubmit="enviarSolicitacao(event)">
+                        <div class="form-group-row">
+                            <div class="form-group">
+                                <label for="objetivo">Objetivo Principal</label>
+                                <select id="objetivo" required>
+                                    <option value="">Selecione o objetivo</option>
+                                    <option value="Hipertrofia">Hipertrofia (Ganho de Massa)</option>
+                                    <option value="Definição">Definição Corporal</option>
+                                    <option value="Emagrecimento">Emagrecimento / Perda de Gordura</option>
+                                    <option value="Condicionamento">Condicionamento Físico / Resistência</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="observacoes">O que você deseja no novo treino? (Observações / Preferências)</label>
+                            <textarea id="observacoes" rows="4" placeholder="Ex: Gostaria de focar mais em membros inferiores e abdômen, e reduzir o volume de treinos de peito..." required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn-submit-request">Enviar Solicitação</button>
+                    </form>
+                </div>
+            </div>
 
+        </section>
     </main>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const aprovado = localStorage.getItem('treino_aprovado') === 'true';
+            if (aprovado) {
+                definirStatusAprovado();
+            }
+        });
+
+        function aprovarRotina() {
+            localStorage.setItem('treino_aprovado', 'true');
+            definirStatusAprovado();
+            alert('Rotina de treinos aprovada com sucesso!');
+        }
+
+        function definirStatusAprovado() {
+            const banner = document.getElementById('approvalBanner');
+            const icon = banner.querySelector('.status-icon');
+            const title = document.getElementById('approvalStatusTitle');
+            const desc = document.getElementById('approvalStatusDesc');
+            const btn = document.getElementById('btnApprove');
+
+            banner.classList.add('approved');
+            icon.textContent = 'check_circle';
+            title.textContent = 'Rotina de Treinos Aprovada';
+            desc.textContent = 'Você aprovou esta rotina de exercícios. Bom treino!';
+            if (btn) btn.remove();
+        }
+
+        function enviarSolicitacao(e) {
+            e.preventDefault();
+            const objetivo = document.getElementById('objetivo').value;
+            const observacoes = document.getElementById('observacoes').value.trim();
+
+            const solicitacoes = JSON.parse(localStorage.getItem('solicitacoes_treino') || '[]');
+            solicitacoes.push({
+                objetivo,
+                observacoes,
+                data: new Date().toLocaleDateString('pt-BR')
+            });
+            localStorage.setItem('solicitacoes_treino', JSON.stringify(solicitacoes));
+
+            alert('Solicitação de novo treino enviada com sucesso ao seu Personal Trainer!');
+            document.getElementById('requestWorkoutForm').reset();
+        }
+
+        function logout() {
+            window.location.href = '/login';
+        }
+    </script>
 </body>
 
 </html>

@@ -112,6 +112,45 @@ app.get('/cliente/meu-treino', (req, res) => {
 
 });
 
+app.get('/cliente/evolucao', (req, res) => {
+
+    res.sendFile(
+        path.join(
+            __dirname,
+            'views',
+            'cliente',
+            'evolucao.html'
+        )
+    );
+
+});
+
+app.get('/cliente/minha-matricula', (req, res) => {
+
+    res.sendFile(
+        path.join(
+            __dirname,
+            'views',
+            'cliente',
+            'minha-matricula.html'
+        )
+    );
+
+});
+
+app.get('/cliente/perfil', (req, res) => {
+
+    res.sendFile(
+        path.join(
+            __dirname,
+            'views',
+            'cliente',
+            'perfil.html'
+        )
+    );
+
+});
+
 app.get('/admin/treinos', (req, res) => {
 
     res.sendFile(

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evolução Física - FitCore</title>
+
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+
+    <!-- CSS base (topbar + navbar) -->
+    <link rel="stylesheet" href="/css/landing.css">
+    <!-- CSS da tela -->
+    <link rel="stylesheet" href="/css/evolucao.css">
+
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+        <span>
+            <i class="material-symbols-outlined">location_on</i>
+            São Luís - MA
+        </span>
+
+        <span>
+            <i class="material-symbols-outlined">call</i>
+            (98) 99999-9999
+        </span>
+
+        <span>
+            <i class="material-symbols-outlined">mail</i>
+            contato@fitcore.com
+        </span>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav class="landing-navbar">
+        <h2 class="landing-logo">FIT<span>CORE</span></h2>
+
+        <ul>
+            <li><a href="/cliente/dashboard">Dashboard</a></li>
+            <li><a href="/cliente/meu-treino">Meus Treinos</a></li>
+            <li><a class="active" href="/cliente/evolucao">Evolução</a></li>
+            <li><a href="/cliente/minha-matricula">Matrícula</a></li>
+        </ul>
+
+        <div class="nav-buttons">
+            <button class="btn-login" onclick="logout()">SAIR</button>
+        </div>
+    </nav>
+
+    <!-- HERO / CONTENT -->
+    <main class="evolucao-page">
+        <section class="evolucao-content">
+
+            <div class="evolucao-header">
+                <p class="section-mini">Acompanhamento</p>
+                <h1>Sua <span>Evolução</span></h1>
+                <p>Veja a evolução das suas medidas corporais, percentual de gordura e progresso geral na academia.</p>
+            </div>
+
+            <!-- METRIC CARDS -->
+            <div class="metrics-grid">
+
+                <div class="metric-card">
+                    <h3>Peso Atual</h3>
+                    <div class="metric-value">82.5<span>kg</span></div>
+                    <div class="metric-trend down">
+                        <span class="material-symbols-outlined">trending_down</span>
+                        <span>-1.3kg no último mês</span>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <h3>Gordura Corporal</h3>
+                    <div class="metric-value">16.5<span>%</span></div>
+                    <div class="metric-trend down">
+                        <span class="material-symbols-outlined">trending_down</span>
+                        <span>-1.3% no último mês</span>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <h3>Massa Muscular</h3>
+                    <div class="metric-value">44.0<span>%</span></div>
+                    <div class="metric-trend up">
+                        <span class="material-symbols-outlined">trending_up</span>
+                        <span>+0.5% no último mês</span>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <h3>IMC</h3>
+                    <div class="metric-value">25.5<span>Kg/m²</span></div>
+                    <div class="metric-trend down">
+                        <span class="material-symbols-outlined">trending_down</span>
+                        <span>Sobrepeso leve</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- CHARTS -->
+            <div class="charts-container">
+
+                <div class="chart-card">
+                    <h3>Histórico de Peso (kg)</h3>
+                    <div style="position: relative; height: 300px; width: 100%;">
+                        <canvas id="weightChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <h3>Composição Corporal (%)</h3>
+                    <div style="position: relative; height: 300px; width: 100%;">
+                        <canvas id="compositionChart"></canvas>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- HISTORY TABLE -->
+            <div class="history-card">
+                <h2>Histórico de Avaliações</h2>
+                <div class="history-table-wrapper">
+                    <table class="history-table">
+                        <thead>
+                            <tr>
+                                <th>Data</th>
+                                <th>Peso</th>
+                                <th>Altura</th>
+                                <th>Gordura (BF)</th>
+                                <th>Massa Muscular</th>
+                                <th>IMC</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>10/06/2026</td>
+                                <td>82.5 kg</td>
+                                <td>1.80 m</td>
+                                <td>16.5%</td>
+                                <td>44.0%</td>
+                                <td>25.5</td>
+                            </tr>
+                            <tr>
+                                <td>10/05/2026</td>
+                                <td>83.8 kg</td>
+                                <td>1.80 m</td>
+                                <td>17.8%</td>
+                                <td>43.5%</td>
+                                <td>25.9</td>
+                            </tr>
+                            <tr>
+                                <td>10/04/2026</td>
+                                <td>85.0 kg</td>
+                                <td>1.80 m</td>
+                                <td>19.2%</td>
+                                <td>42.8%</td>
+                                <td>26.2</td>
+                            </tr>
+                            <tr>
+                                <td>10/03/2026</td>
+                                <td>86.5 kg</td>
+                                <td>1.80 m</td>
+                                <td>21.0%</td>
+                                <td>42.0%</td>
+                                <td>26.7</td>
+                            </tr>
+                            <tr>
+                                <td>10/02/2026</td>
+                                <td>88.0 kg</td>
+                                <td>1.80 m</td>
+                                <td>23.2%</td>
+                                <td>41.2%</td>
+                                <td>27.2</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <script>
+        // Configuração Geral do Chart.js para Tema Escuro
+        Chart.defaults.color = '#aaa';
+        Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.08)';
+        Chart.defaults.font.family = "'Oswald', sans-serif";
+
+        // Gráfico de Peso
+        const ctxWeight = document.getElementById('weightChart').getContext('2d');
+        new Chart(ctxWeight, {
+            type: 'line',
+            data: {
+                labels: ['Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
+                datasets: [{
+                    label: 'Peso (kg)',
+                    data: [88.0, 86.5, 85.0, 83.8, 82.5],
+                    borderColor: '#dc2626',
+                    backgroundColor: 'rgba(220, 38, 38, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#dc2626',
+                    pointBorderColor: '#fff',
+                    pointHoverRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        min: 78,
+                        max: 92,
+                        ticks: {
+                            stepSize: 2
+                        }
+                    }
+                }
+            }
+        });
+
+        // Gráfico de Composição Corporal
+        const ctxComp = document.getElementById('compositionChart').getContext('2d');
+        new Chart(ctxComp, {
+            type: 'bar',
+            data: {
+                labels: ['Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
+                datasets: [
+                    {
+                        label: 'Gordura (%)',
+                        data: [23.2, 21.0, 19.2, 17.8, 16.5],
+                        backgroundColor: '#333333',
+                        borderColor: '#555555',
+                        borderWidth: 1,
+                        borderRadius: 4
+                    },
+                    {
+                        label: 'Massa Muscular (%)',
+                        data: [41.2, 42.0, 42.8, 43.5, 44.0],
+                        backgroundColor: '#dc2626',
+                        borderColor: '#ef4444',
+                        borderWidth: 1,
+                        borderRadius: 4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            boxWidth: 12,
+                            padding: 15
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        min: 0,
+                        max: 60,
+                        ticks: {
+                            stepSize: 10
+                        }
+                    }
+                }
+            }
+        });
+
+        function logout() {
+            // Limpa qualquer dado local se necessário e vai pro login
+            window.location.href = '/login';
+        }
+    </script>
+</body>
+
+</html>

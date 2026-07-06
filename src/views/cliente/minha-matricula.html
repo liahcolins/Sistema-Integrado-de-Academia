@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minha Matrícula - FitCore</title>
+
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+
+    <!-- CSS base (topbar + navbar) -->
+    <link rel="stylesheet" href="/css/landing.css">
+    <!-- CSS da tela -->
+    <link rel="stylesheet" href="/css/matricula.css">
+</head>
+
+<body>
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+        <span>
+            <i class="material-symbols-outlined">location_on</i>
+            São Luís - MA
+        </span>
+
+        <span>
+            <i class="material-symbols-outlined">call</i>
+            (98) 99999-9999
+        </span>
+
+        <span>
+            <i class="material-symbols-outlined">mail</i>
+            contato@fitcore.com
+        </span>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav class="landing-navbar">
+        <h2 class="landing-logo">FIT<span>CORE</span></h2>
+
+        <ul>
+            <li><a href="/cliente/dashboard">Dashboard</a></li>
+            <li><a href="/cliente/meu-treino">Meus Treinos</a></li>
+            <li><a href="/cliente/evolucao">Evolução</a></li>
+            <li><a class="active" href="/cliente/minha-matricula">Matrícula</a></li>
+        </ul>
+
+        <div class="nav-buttons">
+            <button class="btn-login" onclick="logout()">SAIR</button>
+        </div>
+    </nav>
+
+    <!-- CONTENT -->
+    <main class="matricula-page">
+        <section class="matricula-content">
+
+            <div class="matricula-header">
+                <p class="section-mini">Plano & Contrato</p>
+                <h1>Sua <span>Matrícula</span></h1>
+                <p>Consulte os detalhes do seu plano ativo, data de vencimento, forma de pagamento e histórico financeiro.</p>
+            </div>
+
+            <!-- LAYOUT GRID -->
+            <div class="matricula-grid">
+                
+                <!-- CARD PLAN DETALHE -->
+                <div class="plan-detail-card">
+                    <div>
+                        <div class="plan-header">
+                            <div class="plan-info">
+                                <h2>Plano Gold</h2>
+                                <div class="plan-price">R$ 149,90<span>/mês</span></div>
+                            </div>
+                            
+                            <span class="status-badge">Ativa</span>
+                        </div>
+
+                        <div class="details-list">
+                            <div class="detail-item">
+                                <label>Código Aluno</label>
+                                <span>#FC-992381</span>
+                            </div>
+
+                            <div class="detail-item">
+                                <label>Data de Início</label>
+                                <span>15/01/2026</span>
+                            </div>
+
+                            <div class="detail-item">
+                                <label>Próximo Vencimento</label>
+                                <span>15/07/2026</span>
+                            </div>
+
+                            <div class="detail-item">
+                                <label>Forma de Pagamento</label>
+                                <span>Cartão Visa (**** 4321)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD BENEFICIOS -->
+                <div class="benefits-card">
+                    <h3>Benefícios Inclusos</h3>
+                    
+                    <ul class="benefits-list">
+                        <li>
+                            <span class="material-symbols-outlined">check_circle</span>
+                            <span>Acesso livre a todas as áreas</span>
+                        </li>
+                        <li>
+                            <span class="material-symbols-outlined">check_circle</span>
+                            <span>Aulas de ginástica e lutas</span>
+                        </li>
+                        <li>
+                            <span class="material-symbols-outlined">check_circle</span>
+                            <span>Consultoria com Personal Trainer</span>
+                        </li>
+                        <li>
+                            <span class="material-symbols-outlined">check_circle</span>
+                            <span>Avaliação física mensal</span>
+                        </li>
+                        <li>
+                            <span class="material-symbols-outlined">check_circle</span>
+                            <span>Aplicativo FitCore Premium</span>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <!-- FINANÇAS HISTORY -->
+            <div class="history-card">
+                <h2>Histórico de Pagamentos</h2>
+                
+                <div class="history-table-wrapper">
+                    <table class="history-table">
+                        <thead>
+                            <tr>
+                                <th>Referência</th>
+                                <th>Valor</th>
+                                <th>Forma de Pagamento</th>
+                                <th>Data de Pagamento</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Junho / 2026</td>
+                                <td>R$ 149,90</td>
+                                <td>Cartão de Crédito</td>
+                                <td>15/06/2026</td>
+                                <td>
+                                    <span class="payment-status">
+                                        <i class="material-symbols-outlined">check_circle</i>
+                                        Pago
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Maio / 2026</td>
+                                <td>R$ 149,90</td>
+                                <td>Cartão de Crédito</td>
+                                <td>15/05/2026</td>
+                                <td>
+                                    <span class="payment-status">
+                                        <i class="material-symbols-outlined">check_circle</i>
+                                        Pago
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Abril / 2026</td>
+                                <td>R$ 149,90</td>
+                                <td>Cartão de Crédito</td>
+                                <td>15/04/2026</td>
+                                <td>
+                                    <span class="payment-status">
+                                        <i class="material-symbols-outlined">check_circle</i>
+                                        Pago
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Março / 2026</td>
+                                <td>R$ 149,90</td>
+                                <td>Cartão de Crédito</td>
+                                <td>15/03/2026</td>
+                                <td>
+                                    <span class="payment-status">
+                                        <i class="material-symbols-outlined">check_circle</i>
+                                        Pago
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Fevereiro / 2026</td>
+                                <td>R$ 149,90</td>
+                                <td>Cartão de Crédito</td>
+                                <td>15/02/2026</td>
+                                <td>
+                                    <span class="payment-status">
+                                        <i class="material-symbols-outlined">check_circle</i>
+                                        Pago
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <script>
+        function logout() {
+            window.location.href = '/login';
+        }
+    </script>
+</body>
+
+</html>
