@@ -34,6 +34,14 @@ async function carregarTreinos() {
                 <td>${treino.personal}</td>
                 <td>${formatarData(treino.data_criacao)}</td>
                 <td>${treino.observacoes || ''}</td>
+                <td>
+    <button
+        class="btn btn-danger btn-sm"
+        onclick="excluirTreino(${treino.id})"
+    >
+        Excluir
+    </button>
+</td>
             </tr>
         `;
 
@@ -93,4 +101,43 @@ function formatarData(data) {
     }
 
     return new Date(data).toLocaleDateString('pt-BR');
+}
+
+async function excluirTreino(id) {
+
+    const confirmar = confirm(
+        'Deseja realmente excluir este treino?'
+    );
+
+    if (!confirmar) {
+        return;
+    }
+
+    try {
+
+        const resposta = await fetch(
+            `/treinos/${id}`,
+            {
+                method: 'DELETE'
+            }
+        );
+
+        if (!resposta.ok) {
+            throw new Error('Erro ao excluir treino');
+        }
+
+        alert('Treino excluído com sucesso');
+
+        carregarTreinos();
+
+    } catch (erro) {
+
+        console.error(
+            'Erro ao excluir treino:',
+            erro
+        );
+
+        alert('Não foi possível excluir o treino');
+    }
+
 }
