@@ -1,0 +1,237 @@
+.perfil-page {
+    min-height: 100vh;
+    background:
+        linear-gradient(rgba(0, 0, 0, .75), rgba(0, 0, 0, .8)),
+        url('/img/fundo-academia.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: white;
+}
+
+.perfil-content {
+    padding: 170px 90px 60px;
+}
+
+.perfil-header {
+    margin-bottom: 40px;
+}
+
+.section-mini {
+    color: #dc2626;
+    font-family: 'Oswald', sans-serif;
+    font-size: 20px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.perfil-header h1 {
+    color: white;
+    font-size: 72px;
+    font-family: 'Oswald', sans-serif;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.perfil-header h1 span {
+    color: #dc2626;
+}
+
+.perfil-header p {
+    color: #aaa;
+    font-size: 18px;
+    max-width: 600px;
+}
+
+/* GRID LAYOUT */
+.perfil-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 30px;
+    margin-bottom: 45px;
+}
+
+.profile-summary-card {
+    background: rgba(20, 20, 20, 0.75);
+    backdrop-filter: blur(8px);
+    border-radius: 16px;
+    padding: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 20px;
+}
+
+.avatar-container {
+    width: 120px;
+    height: 120px;
+    background: #111;
+    border: 2px solid #dc2626;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 15px rgba(220, 38, 38, 0.2);
+}
+
+.avatar-container .material-symbols-outlined {
+    font-size: 64px;
+    color: #dc2626;
+}
+
+.profile-summary-card h2 {
+    font-size: 32px;
+    font-family: 'Oswald', sans-serif;
+    margin: 0;
+    color: white;
+    text-transform: uppercase;
+}
+
+.profile-tag {
+    background: rgba(220, 38, 38, 0.15);
+    border: 1px solid #dc2626;
+    color: #dc2626;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+.profile-details-list {
+    width: 100%;
+    margin-top: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    text-align: left;
+}
+
+.profile-detail-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+}
+
+.profile-detail-item label {
+    color: #888;
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+}
+
+.profile-detail-item span {
+    color: white;
+    font-weight: 500;
+}
+
+/* FORM CARD */
+.profile-form-card {
+    background: rgba(20, 20, 20, 0.75);
+    backdrop-filter: blur(8px);
+    border-radius: 16px;
+    padding: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.profile-form-card h3 {
+    font-size: 24px;
+    font-family: 'Oswald', sans-serif;
+    color: white;
+    margin-bottom: 25px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.profile-form-card form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    color: #888;
+    font-size: 13px;
+    text-transform: uppercase;
+    font-family: 'Oswald', sans-serif;
+    letter-spacing: 0.5px;
+}
+
+.form-group input {
+    height: 52px;
+    border: 1px solid #2a2a2a;
+    background: #121212;
+    color: white;
+    padding: 0 18px;
+    border-radius: 8px;
+    outline: none;
+    font-size: 16px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-group input:focus {
+    border-color: #dc2626;
+    box-shadow: 0 0 8px rgba(220, 38, 38, 0.35);
+}
+
+.profile-form-card button {
+    height: 52px;
+    border: none;
+    border-radius: 8px;
+    background: #dc2626;
+    color: white;
+    font-size: 18px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+    margin-top: 15px;
+    align-self: flex-start;
+    padding: 0 40px;
+}
+
+.profile-form-card button:hover {
+    background: #ef4444;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(220, 38, 38, 0.4);
+}
+
+.profile-form-card button:active {
+    transform: translateY(0);
+}
+
+@media (max-width: 992px) {
+    .perfil-content {
+        padding: 140px 30px 40px;
+    }
+    .perfil-header h1 {
+        font-size: 48px;
+    }
+    .perfil-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .form-group-row {
+        grid-template-columns: 1fr;
+    }
+}

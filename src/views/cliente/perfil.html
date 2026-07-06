@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Perfil - FitCore</title>
+
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+
+    <!-- CSS base (topbar + navbar) -->
+    <link rel="stylesheet" href="/css/landing.css">
+    <!-- CSS da tela -->
+    <link rel="stylesheet" href="/css/perfil.css">
+</head>
+
+<body>
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+        <span>
+            <i class="material-symbols-outlined">location_on</i>
+            São Luís - MA
+        </span>
+
+        <span>
+            <i class="material-symbols-outlined">call</i>
+            (98) 99999-9999
+        </span>
+
+        <span>
+            <i class="material-symbols-outlined">mail</i>
+            contato@fitcore.com
+        </span>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav class="landing-navbar">
+        <h2 class="landing-logo">FIT<span>CORE</span></h2>
+
+        <ul>
+            <li><a href="/cliente/dashboard">Dashboard</a></li>
+            <li><a href="/cliente/meu-treino">Meus Treinos</a></li>
+            <li><a href="/cliente/evolucao">Evolução</a></li>
+            <li><a href="/cliente/minha-matricula">Matrícula</a></li>
+        </ul>
+
+        <div class="nav-buttons">
+            <button class="btn-login" onclick="logout()">SAIR</button>
+        </div>
+    </nav>
+
+    <!-- CONTENT -->
+    <main class="perfil-page">
+        <section class="perfil-content">
+
+            <div class="perfil-header">
+                <p class="section-mini">Dados Pessoais</p>
+                <h1>Meu <span>Perfil</span></h1>
+                <p>Veja e edite suas informações de cadastro e dados de login no sistema FitCore.</p>
+            </div>
+
+            <!-- GRID LAYOUT -->
+            <div class="perfil-grid">
+                
+                <!-- CARD RESUMO -->
+                <div class="profile-summary-card">
+                    <div class="avatar-container">
+                        <span class="material-symbols-outlined">person</span>
+                    </div>
+
+                    <h2 id="userNameSummary">João Silva</h2>
+                    <span class="profile-tag">Aluno</span>
+
+                    <div class="profile-details-list">
+                        <div class="profile-detail-item">
+                            <label>Matrícula</label>
+                            <span>#FC-992381</span>
+                        </div>
+                        <div class="profile-detail-item">
+                            <label>Plano</label>
+                            <span>Plano Gold</span>
+                        </div>
+                        <div class="profile-detail-item">
+                            <label>Status</label>
+                            <span style="color: #22c55e;">Ativo</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD FORMULÁRIO -->
+                <div class="profile-form-card">
+                    <h3>Editar Perfil</h3>
+                    
+                    <form id="profileForm">
+                        <div class="form-group-row">
+                            <div class="form-group">
+                                <label for="nome">Nome Completo</label>
+                                <input type="text" id="nome" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">E-mail</label>
+                                <input type="email" id="email" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group-row">
+                            <div class="form-group">
+                                <label for="senha">Nova Senha</label>
+                                <input type="password" id="senha" placeholder="Preencha apenas para alterar">
+                            </div>
+                            <div class="form-group">
+                                <label for="confirmar-senha">Confirmar Nova Senha</label>
+                                <input type="password" id="confirmar-senha" placeholder="Preencha apenas para alterar">
+                            </div>
+                        </div>
+
+                        <button type="submit">
+                            Salvar Alterações
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+
+        </section>
+    </main>
+
+    <script>
+        // Carrega dados iniciais do perfil (usamos ID = 1 para fins integrados)
+        const CLIENTE_ID = 1;
+        let senhaAtual = '123456'; // fallback
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            await carregarDadosPerfil();
+        });
+
+        async function carregarDadosPerfil() {
+            try {
+                // Buscamos a lista completa e selecionamos o primeiro cliente (ID=1) ou correspondente
+                const response = await fetch('/clientes');
+                const clientes = await response.json();
+                
+                // Procuramos o cliente com ID 1
+                const cliente = clientes.find(c => c.id === CLIENTE_ID) || clientes[0];
+                
+                if (cliente) {
+                    document.getElementById('nome').value = cliente.nome;
+                    document.getElementById('email').value = cliente.email;
+                    document.getElementById('userNameSummary').textContent = cliente.nome;
+                }
+            } catch (error) {
+                console.error('Erro ao carregar dados do perfil:', error);
+            }
+        }
+
+        document.getElementById('profileForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const nome = document.getElementById('nome').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const novaSenha = document.getElementById('senha').value;
+            const confirmarSenha = document.getElementById('confirmar-senha').value;
+
+            if (novaSenha && novaSenha !== confirmarSenha) {
+                alert('A nova senha e a confirmação de senha não coincidem!');
+                return;
+            }
+
+            const dados = {
+                nome,
+                email,
+                senha: novaSenha || senhaAtual, // mantém a senha atual se não preenchida
+                status_matricula: 'Ativa'
+            };
+
+            try {
+                const response = await fetch(`/clientes/${CLIENTE_ID}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(dados)
+                });
+
+                if (response.ok) {
+                    document.getElementById('userNameSummary').textContent = nome;
+                    document.getElementById('senha').value = '';
+                    document.getElementById('confirmar-senha').value = '';
+                    alert('Perfil atualizado com sucesso!');
+                } else {
+                    alert('Erro ao atualizar perfil.');
+                }
+            } catch (error) {
+                console.error('Erro ao salvar alterações:', error);
+                alert('Erro de conexão ao salvar alterações.');
+            }
+        });
+
+        function logout() {
+            window.location.href = '/login';
+        }
+    </script>
+</body>
+
+</html>
