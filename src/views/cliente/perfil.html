@@ -132,9 +132,9 @@
     </main>
 
     <script>
-        // Carrega dados iniciais do perfil (usamos ID = 1 para fins integrados)
-        const CLIENTE_ID = 1;
-        let senhaAtual = '123456'; // fallback
+        // Carrega dados do usuário logado do localStorage ou usa fallback ID=1
+        const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado') || '{}');
+        const CLIENTE_ID = usuarioLogado.id || 1;
 
         document.addEventListener('DOMContentLoaded', async () => {
             await carregarDadosPerfil();
@@ -142,11 +142,11 @@
 
         async function carregarDadosPerfil() {
             try {
-                // Buscamos a lista completa e selecionamos o primeiro cliente (ID=1) ou correspondente
+                // Buscamos a lista completa e selecionamos o cliente correspondente
                 const response = await fetch('/clientes');
                 const clientes = await response.json();
                 
-                // Procuramos o cliente com ID 1
+                // Procuramos o cliente correspondente
                 const cliente = clientes.find(c => c.id === CLIENTE_ID) || clientes[0];
                 
                 if (cliente) {
@@ -175,9 +175,11 @@
             const dados = {
                 nome,
                 email,
-                senha: novaSenha || senhaAtual, // mantém a senha atual se não preenchida
                 status_matricula: 'Ativa'
             };
+            if (novaSenha) {
+                dados.senha = novaSenha;
+            }
 
             try {
                 const response = await fetch(`/clientes/${CLIENTE_ID}`, {
@@ -189,6 +191,11 @@
                 });
 
                 if (response.ok) {
+                    // Atualiza o local storage com os novos dados
+                    usuarioLogado.nome = nome;
+                    usuarioLogado.email = email;
+                    localStorage.setItem('usuarioLogado', JSON.stringify(usuarioLogado));
+
                     document.getElementById('userNameSummary').textContent = nome;
                     document.getElementById('senha').value = '';
                     document.getElementById('confirmar-senha').value = '';
@@ -203,6 +210,8 @@
         });
 
         function logout() {
+            localStorage.removeItem('usuarioLogado');
+            localStorage.removeItem('perfilLogado');
             window.location.href = '/login';
         }
     </script>
