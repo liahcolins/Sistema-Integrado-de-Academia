@@ -2,63 +2,73 @@
 
 ##  Requisitos Funcionais
 
-RF01 - O sistema deve permitir cadastrar alunos informando nome, CPF, telefone, e-mail e plano vinculado.
+RF01 - O sistema deve permitir cadastrar clientes informando nome, e-mail, senha e status de matrícula.
 
-RF02 - O sistema deve permitir editar os dados cadastrais de alunos já registrados.
+RF02 - O sistema deve permitir listar os clientes cadastrados.
 
-RF03 - O sistema deve permitir excluir alunos cadastrados.
+RF03 - O sistema deve permitir editar os dados cadastrais de clientes já registrados.
 
-RF04 - O sistema deve permitir cadastrar planos contendo nome, valor mensal e duração.
+RF04 - O sistema deve permitir excluir clientes cadastrados.
 
-RF05 - O sistema deve permitir associar um aluno a exatamente um plano ativo por vez.
+RF05 - O sistema deve permitir cadastrar personal trainers informando nome, e-mail, senha e CREF.
 
-RF06 - O sistema deve permitir cadastrar treinos com nome, objetivo e lista de exercícios.
+RF06 - O sistema deve permitir listar, editar e excluir personal trainers cadastrados.
 
-RF07 - O sistema deve permitir associar um ou mais treinos a um aluno.
+RF07 - O sistema deve permitir cadastrar exercícios informando nome, descrição e categoria.
 
-RF08 - O sistema deve permitir registrar pagamentos contendo aluno, valor, data e status.
+RF08 - O sistema deve permitir listar, editar e excluir exercícios cadastrados.
 
-RF09 - O sistema deve identificar automaticamente alunos inadimplentes.
+RF09 - O sistema deve permitir cadastrar matrículas informando data de início, status e cliente associado.
 
-RF10 - O sistema deve permitir registrar a frequência dos alunos por data.
+RF10 - O sistema deve permitir listar, editar e excluir matrículas cadastradas.
 
-RF11 - O sistema deve permitir gerar relatório com a lista de alunos inadimplentes.
+RF11 - O sistema deve permitir cadastrar treinos informando nome, data de criação, observações, cliente e personal trainer responsável.
 
-RF12 - O sistema deve permitir gerar relatório com a frequência individual de cada aluno.
+RF12 - O sistema deve permitir associar um ou mais treinos a um cliente.
 
-RF13 - O sistema deve permitir exportar relatórios em formato CSV.
+RF13 - O sistema deve permitir atualizar os dados de um treino já cadastrado.
+
+RF14 - O sistema deve permitir excluir treinos cadastrados mediante confirmação do usuário.
+
+RF15 - O sistema deve permitir cadastrar itens de treino associados a um treino e a um exercício.
+
+RF16 - O sistema deve permitir registrar, em um item de treino, séries, repetições, peso, tempo, descanso e instruções.
+
+RF17 - O sistema deve permitir consultar os itens vinculados a um treino específico.
+
+RF18 - O sistema deve permitir que administrador, personal trainer ou cliente realizem login utilizando e-mail e senha.
 
 
 ##  Requisitos Não Funcionais
 
-RNF01 - O sistema deve ser desenvolvido na linguagem Python 3.12 ou superior.
+RNF01 - O sistema deve ser desenvolvido utilizando Node.js, Express, JavaScript, HTML, CSS, Bootstrap e MySQL.
 
-RNF02 - O sistema deve executar as operações de cadastro, edição, exclusão e consulta em até 2 segundos, considerando uma base de até 1.000 alunos cadastrados.
+RNF02 - O sistema deve executar operações de cadastro, edição, exclusão e consulta em até 2 segundos em condições normais de uso, considerando uma base de até 1.000 clientes cadastrados.
 
-RNF03 - O sistema deve manter tempo de resposta inferior a 2 segundos mesmo com até 1.000 alunos, 100 planos e 5.000 registros de pagamento cadastrados.
+RNF03 - O sistema deve utilizar banco de dados persistente, garantindo que os dados permaneçam armazenados após o encerramento da aplicação.
 
-RNF04 - O sistema deve validar campos obrigatórios nos cadastros de alunos, planos, treinos e pagamentos, impedindo o salvamento de registros com dados incompletos.
+RNF04 - O sistema deve apresentar mensagens claras quando ocorrerem erros durante operações de cadastro, edição, exclusão ou consulta.
 
-RNF05 - O sistema não deve permitir o cadastro de dois alunos com o mesmo CPF.
+RNF05 - O sistema deve possuir estrutura separada em rotas, controllers, models, views e arquivos estáticos.
 
-RNF06 - O sistema deve armazenar os dados de forma persistente, garantindo que as informações permaneçam salvas mesmo após o encerramento da aplicação.
+RNF06 - O sistema deve ser acessível por navegador web em ambiente local.
 
-RNF07 - O sistema deve apresentar mensagens de erro claras sempre que houver tentativa de cadastro inválido, informando ao usuário o campo que precisa ser corrigido.
+RNF07 - As credenciais de acesso ao banco de dados não devem ser enviadas ao repositório público.
 
-RNF08 - O sistema deve estar estruturado em, no mínimo, 3 módulos independentes: alunos, treinos e financeiro.
-
-RNF09 - O sistema deve permitir a exportação de dados de alunos, pagamentos e frequência em formato CSV.
-
-RNF10 - O sistema deve permitir que um usuário realize o cadastro de um aluno em até 1 minuto após iniciar a operação.
+RNF08 - O sistema deve manter a interface administrativa organizada, permitindo acesso aos módulos de clientes, personais, exercícios, treinos e matrículas.
 
 ##  Regras de Negócio
 
-RN01 - Um aluno não pode possuir mais de um plano ativo simultaneamente.
+RN01 - Um cliente pode possuir vários treinos associados.
 
-RN02 - Um aluno é considerado inadimplente quando possui pagamento em atraso superior a 30 dias.
+RN02 - Todo treino deve estar associado obrigatoriamente a um cliente e a um personal trainer.
 
-RN03 - Um pagamento só pode ser registrado com valor maior que zero.
+RN03 - Todo item de treino deve estar associado obrigatoriamente a um treino e a um exercício.
 
-RN04 - Um aluno só pode ter frequência registrada se estiver com matrícula ativa.
+RN04 - Um exercício pode possuir características específicas de musculação, exercício aeróbico ou aula.
 
-RN05 - Um plano deve possuir valor mensal maior que zero.
+RN05 - Uma matrícula deve estar associada obrigatoriamente a um cliente.
+
+RN06 - A exclusão de um treino deve solicitar confirmação antes de enviar a operação ao banco de dados.
+
+RN07 - A exclusão de um cliente, personal trainer, treino ou exercício pode afetar registros associados conforme as regras de integridade do banco de dados.
