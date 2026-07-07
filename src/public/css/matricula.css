@@ -278,3 +278,16 @@
         grid-template-columns: 1fr;
     }
 }
+
+.status-badge.inativa {
+    background: rgba(239, 68, 68, 0.12);
+    border: 1px solid #ef4444;
+    color: #ef4444;
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.15);
+}
+
+.status-badge.inativa::before {
+    background: #ef4444;
+    animation: none;
+}
+

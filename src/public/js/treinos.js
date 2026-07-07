@@ -3,6 +3,11 @@ document.addEventListener(
     () => {
 
         carregarTreinos();
+        carregarFiltros();
+
+        // Colocar a data atual como padrão no campo de data de criação
+        const hoje = new Date().toISOString().split('T')[0];
+        document.getElementById('data_criacao').value = hoje;
 
         document
             .getElementById('treinoForm')
@@ -35,13 +40,15 @@ async function carregarTreinos() {
                 <td>${formatarData(treino.data_criacao)}</td>
                 <td>${treino.observacoes || ''}</td>
                 <td>
-    <button
-        class="btn btn-danger btn-sm"
-        onclick="excluirTreino(${treino.id})"
-    >
-        Excluir
-    </button>
-</td>
+                    <div class="action-buttons">
+                        <button
+                            class="delete-btn"
+                            onclick="excluirTreino(${treino.id})"
+                        >
+                            Excluir
+                        </button>
+                    </div>
+                </td>
             </tr>
         `;
 
@@ -80,6 +87,9 @@ async function cadastrarTreino(evento) {
             .getElementById('treinoForm')
             .reset();
 
+        const hoje = new Date().toISOString().split('T')[0];
+        document.getElementById('data_criacao').value = hoje;
+
         bootstrap.Modal
             .getInstance(
                 document.getElementById('modalTreino')
@@ -100,7 +110,9 @@ function formatarData(data) {
         return '';
     }
 
-    return new Date(data).toLocaleDateString('pt-BR');
+    const dataObj = new Date(data);
+    const utcData = new Date(dataObj.getTime() + dataObj.getTimezoneOffset() * 60000);
+    return utcData.toLocaleDateString('pt-BR');
 }
 
 async function excluirTreino(id) {
@@ -141,3 +153,29 @@ async function excluirTreino(id) {
     }
 
 }
+
+async function carregarFiltros() {
+    try {
+        const [resClientes, resPersonais] = await Promise.all([
+            fetch('/clientes'),
+            fetch('/personal-trainers')
+        ]);
+        const clientes = await resClientes.json();
+        const personais = await resPersonais.json();
+
+        const selectCliente = document.getElementById('cliente_id');
+        const selectPersonal = document.getElementById('personal_id');
+
+        selectCliente.innerHTML = '<option value="">Selecione o Cliente</option>';
+        clientes.forEach(c => {
+            selectCliente.innerHTML += `<option value="${c.id}">${c.nome}</option>`;
+        });
+
+        selectPersonal.innerHTML = '<option value="">Selecione o Personal</option>';
+        personais.forEach(p => {
+            selectPersonal.innerHTML += `<option value="${p.id}">${p.nome}</option>`;
+        });
+    } catch (err) {
+        console.error('Erro ao carregar dados do modal:', err);
+    }
+}

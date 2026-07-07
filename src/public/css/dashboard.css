@@ -7,7 +7,8 @@
 /* HERO */
 .dashboard-hero {
     position: relative;
-    height: 100vh;
+    height: 75vh;
+    min-height: 580px;
     width: 100%;
     display: flex;
     align-items: center;
@@ -27,6 +28,7 @@
     position: relative;
     z-index: 2;
     padding-left: 90px;
+    padding-top: 80px; /* Evita sobreposição com o logo e menu */
     max-width: 800px;
 }
 
@@ -56,47 +58,55 @@
 
 /* CARDS SOBRE A IMAGEM */
 .admin-actions {
-    position: absolute;
-    bottom: 20px;
-    left: 90px;
-    right: 90px;
+    max-width: 1600px;
+    margin: -80px auto 60px;
+    padding: 0 90px;
 
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 25px;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 20px;
 
+    position: relative;
     z-index: 3;
 }
 
 .admin-card {
-    background: rgba(20,20,20,0.55);
+    background: rgba(20,20,20,0.75);
     backdrop-filter: blur(8px);
 
     border-left: 4px solid #dc2626;
     border-radius: 20px;
-    padding: 30px;
+    padding: 24px;
     text-decoration: none;
     transition: 0.3s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .admin-card:hover {
     transform: translateY(-6px);
+    background: rgba(30,30,30,0.85);
 }
 
 .admin-card h3 {
     color: #dc2626;
     font-family: 'Oswald', sans-serif;
     margin-bottom: 12px;
+    font-size: 24px;
 }
 
 .admin-card p {
     color: #ccc;
+    font-size: 14px;
+    margin: 0;
 }
 
 /* RESPONSIVIDADE */
 @media (max-width: 1400px) {
     .admin-actions {
         grid-template-columns: repeat(3, 1fr);
+        margin-top: -60px;
     }
 }
 
@@ -106,8 +116,13 @@
     }
 
     .admin-actions {
-        left: 40px;
-        right: 40px;
+        padding: 0 40px;
         grid-template-columns: repeat(2, 1fr);
     }
 }
+
+@media (max-width: 600px) {
+    .admin-actions {
+        grid-template-columns: 1fr;
+    }
+}

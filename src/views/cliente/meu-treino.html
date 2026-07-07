@@ -46,7 +46,6 @@
         <ul>
             <li><a href="/cliente/dashboard">Dashboard</a></li>
             <li><a class="active" href="/cliente/meu-treino">Meus Treinos</a></li>
-            <li><a href="/cliente/evolucao">Evolução</a></li>
             <li><a href="/cliente/minha-matricula">Matrícula</a></li>
         </ul>
 
@@ -209,9 +208,33 @@
                             <label for="observacoes">O que você deseja no novo treino? (Observações / Preferências)</label>
                             <textarea id="observacoes" rows="4" placeholder="Ex: Gostaria de focar mais em membros inferiores e abdômen, e reduzir o volume de treinos de peito..." required></textarea>
                         </div>
-                        
-                        <button type="submit" class="btn-submit-request">Enviar Solicitação</button>
+                        <button type="submit" class="btn-submit-request" style="margin-top: 15px;">Enviar Solicitação</button>
                     </form>
+                </div>
+
+                <div class="request-card mt-4" style="margin-top: 30px;">
+                    <div class="request-header">
+                        <span class="material-symbols-outlined">history</span>
+                        <h3>Minhas Solicitações</h3>
+                    </div>
+                    <p>Histórico e status de solicitações de treino enviadas ao seu Personal Trainer.</p>
+                    <div class="table-responsive" style="margin-top: 15px;">
+                        <table class="table table-dark table-hover" style="background: rgba(20,20,20,0.55); border-radius: 10px; overflow: hidden;">
+                            <thead>
+                                <tr>
+                                    <th>Objetivo</th>
+                                    <th>Observações</th>
+                                    <th>Data</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="solicitacoesTableBody">
+                                <tr>
+                                    <td colspan="4" style="text-align: center; color: #888;">Nenhuma solicitação enviada.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
@@ -219,12 +242,46 @@
     </main>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+        // Recupera dados do usuário logado ou usa fallback
+        const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado') || '{}');
+        const CLIENTE_ID = usuarioLogado.id || 1;
+        const CLIENTE_NOME = usuarioLogado.nome || 'Aluno';
+
+        let personalIdAssociado = null;
+
+        document.addEventListener('DOMContentLoaded', async () => {
             const aprovado = localStorage.getItem('treino_aprovado') === 'true';
             if (aprovado) {
                 definirStatusAprovado();
             }
+            await verificarAssociacaoPersonal();
+            carregarMinhasSolicitacoes();
         });
+
+        async function verificarAssociacaoPersonal() {
+            try {
+                const res = await fetch(`/api/cliente-detalhes/${CLIENTE_ID}`);
+                if (res.ok) {
+                    const cliente = await res.json();
+                    personalIdAssociado = cliente.personal_id;
+
+                    const formSection = document.querySelector('.request-workout-section');
+                    if (!personalIdAssociado) {
+                        formSection.innerHTML = `
+                            <div class="request-card" style="border-left: 4px solid #eab308; background: rgba(234,179,8,0.1); padding: 25px; border-radius: 12px;">
+                                <div class="request-header" style="color: #eab308;">
+                                    <span class="material-symbols-outlined">warning</span>
+                                    <h3 style="color: #eab308; font-family: 'Oswald', sans-serif;">Solicitação de Treino Bloqueada</h3>
+                                </div>
+                                <p style="color: #ccc; margin-top: 10px; margin-bottom: 0;">Você ainda não possui um Personal Trainer vinculado ao seu cadastro. Entre em contato com a administração para associar um profissional antes de poder solicitar novos treinos.</p>
+                            </div>
+                        `;
+                    }
+                }
+            } catch (err) {
+                console.error('Erro ao verificar associação:', err);
+            }
+        }
 
         function aprovarRotina() {
             localStorage.setItem('treino_aprovado', 'true');
@@ -246,21 +303,72 @@
             if (btn) btn.remove();
         }
 
-        function enviarSolicitacao(e) {
+        async function carregarMinhasSolicitacoes() {
+            try {
+                const res = await fetch('/api/solicitacoes-treino');
+                const solicitacoes = await res.json();
+                const minhas = solicitacoes.filter(s => s.cliente_id === CLIENTE_ID);
+                const tbody = document.getElementById('solicitacoesTableBody');
+
+                if (minhas.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; color: #888;">Nenhuma solicitação enviada.</td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = '';
+                minhas.forEach(s => {
+                    const status = s.status || 'Pendente';
+                    const badgeClass = status === 'Aprovado' ? 'badge bg-success' : 'badge bg-warning text-dark';
+                    tbody.innerHTML += `
+                        <tr>
+                            <td>${s.objetivo}</td>
+                            <td>${s.observacoes}</td>
+                            <td>${s.data}</td>
+                            <td><span class="${badgeClass}">${status}</span></td>
+                        </tr>
+                    `;
+                });
+            } catch (err) {
+                console.error('Erro ao carregar solicitações:', err);
+            }
+        }
+
+        async function enviarSolicitacao(e) {
             e.preventDefault();
+            if (!personalIdAssociado) {
+                alert('Você precisa ter um Personal Trainer associado para realizar solicitações!');
+                return;
+            }
             const objetivo = document.getElementById('objetivo').value;
             const observacoes = document.getElementById('observacoes').value.trim();
 
-            const solicitacoes = JSON.parse(localStorage.getItem('solicitacoes_treino') || '[]');
-            solicitacoes.push({
+            const dados = {
+                cliente_id: CLIENTE_ID,
+                cliente_nome: CLIENTE_NOME,
+                personal_id: personalIdAssociado,
                 objetivo,
                 observacoes,
                 data: new Date().toLocaleDateString('pt-BR')
-            });
-            localStorage.setItem('solicitacoes_treino', JSON.stringify(solicitacoes));
+            };
 
-            alert('Solicitação de novo treino enviada com sucesso ao seu Personal Trainer!');
-            document.getElementById('requestWorkoutForm').reset();
+            try {
+                const resposta = await fetch('/api/solicitacoes-treino', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(dados)
+                });
+
+                if (resposta.ok) {
+                    alert('Solicitação de novo treino enviada com sucesso ao seu Personal Trainer!');
+                    document.getElementById('requestWorkoutForm').reset();
+                    await carregarMinhasSolicitacoes();
+                } else {
+                    alert('Erro ao enviar solicitação.');
+                }
+            } catch (err) {
+                console.error('Erro ao enviar:', err);
+                alert('Erro ao conectar ao servidor.');
+            }
         }
 
         function logout() {

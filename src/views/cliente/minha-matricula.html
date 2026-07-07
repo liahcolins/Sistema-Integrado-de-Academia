@@ -46,7 +46,6 @@
         <ul>
             <li><a href="/cliente/dashboard">Dashboard</a></li>
             <li><a href="/cliente/meu-treino">Meus Treinos</a></li>
-            <li><a href="/cliente/evolucao">Evolução</a></li>
             <li><a class="active" href="/cliente/minha-matricula">Matrícula</a></li>
         </ul>
 
@@ -73,32 +72,32 @@
                     <div>
                         <div class="plan-header">
                             <div class="plan-info">
-                                <h2>Plano Gold</h2>
+                                <h2 id="planName">Plano Gold</h2>
                                 <div class="plan-price">R$ 149,90<span>/mês</span></div>
                             </div>
                             
-                            <span class="status-badge">Ativa</span>
+                            <span id="statusBadge" class="status-badge">Ativa</span>
                         </div>
 
                         <div class="details-list">
                             <div class="detail-item">
                                 <label>Código Aluno</label>
-                                <span>#FC-992381</span>
+                                <span id="codigoAluno">-</span>
                             </div>
 
                             <div class="detail-item">
                                 <label>Data de Início</label>
-                                <span>15/01/2026</span>
+                                <span id="dataInicio">-</span>
                             </div>
 
                             <div class="detail-item">
                                 <label>Próximo Vencimento</label>
-                                <span>15/07/2026</span>
+                                <span id="proximoVencimento">-</span>
                             </div>
 
                             <div class="detail-item">
                                 <label>Forma de Pagamento</label>
-                                <span>Cartão Visa (**** 4321)</span>
+                                <span id="formaPagamento">Cartão de Crédito</span>
                             </div>
                         </div>
                     </div>
@@ -134,91 +133,81 @@
 
             </div>
 
-            <!-- FINANÇAS HISTORY -->
-            <div class="history-card">
-                <h2>Histórico de Pagamentos</h2>
-                
-                <div class="history-table-wrapper">
-                    <table class="history-table">
-                        <thead>
-                            <tr>
-                                <th>Referência</th>
-                                <th>Valor</th>
-                                <th>Forma de Pagamento</th>
-                                <th>Data de Pagamento</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Junho / 2026</td>
-                                <td>R$ 149,90</td>
-                                <td>Cartão de Crédito</td>
-                                <td>15/06/2026</td>
-                                <td>
-                                    <span class="payment-status">
-                                        <i class="material-symbols-outlined">check_circle</i>
-                                        Pago
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Maio / 2026</td>
-                                <td>R$ 149,90</td>
-                                <td>Cartão de Crédito</td>
-                                <td>15/05/2026</td>
-                                <td>
-                                    <span class="payment-status">
-                                        <i class="material-symbols-outlined">check_circle</i>
-                                        Pago
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Abril / 2026</td>
-                                <td>R$ 149,90</td>
-                                <td>Cartão de Crédito</td>
-                                <td>15/04/2026</td>
-                                <td>
-                                    <span class="payment-status">
-                                        <i class="material-symbols-outlined">check_circle</i>
-                                        Pago
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Março / 2026</td>
-                                <td>R$ 149,90</td>
-                                <td>Cartão de Crédito</td>
-                                <td>15/03/2026</td>
-                                <td>
-                                    <span class="payment-status">
-                                        <i class="material-symbols-outlined">check_circle</i>
-                                        Pago
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Fevereiro / 2026</td>
-                                <td>R$ 149,90</td>
-                                <td>Cartão de Crédito</td>
-                                <td>15/02/2026</td>
-                                <td>
-                                    <span class="payment-status">
-                                        <i class="material-symbols-outlined">check_circle</i>
-                                        Pago
-                                    </span>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            <!-- REMOVIDO HISTÓRICO DE PAGAMENTOS -->
 
         </section>
     </main>
 
     <script>
+        // Carrega dados do usuário logado do localStorage ou usa fallback ID=1
+        const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado') || '{}');
+        const CLIENTE_ID = usuarioLogado.id || 1;
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            await carregarMatriculaCliente();
+        });
+
+        async function carregarMatriculaCliente() {
+            try {
+                // Buscar dados do cliente
+                const resClientes = await fetch('/clientes');
+                const clientes = await resClientes.json();
+                const cliente = clientes.find(c => c.id === CLIENTE_ID);
+
+                // Buscar dados das matriculas
+                const resMatriculas = await fetch('/matriculas');
+                const matriculas = await resMatriculas.json();
+                const matricula = matriculas.find(m => m.cliente_id === CLIENTE_ID);
+
+                // Código do Aluno
+                document.getElementById('codigoAluno').textContent = `#FC-${CLIENTE_ID}`;
+
+                const badge = document.getElementById('statusBadge');
+
+                if (matricula) {
+                    // Preencher dados da matrícula
+                    const dataObj = new Date(matricula.data_inicio);
+                    // Ajustar fuso horário local
+                    const utcData = new Date(dataObj.getTime() + dataObj.getTimezoneOffset() * 60000);
+                    document.getElementById('dataInicio').textContent = utcData.toLocaleDateString('pt-BR');
+                    
+                    // Próximo Vencimento: Calcular 1 mês à frente do dia atual com base no dia de vencimento original
+                    const hoje = new Date();
+                    const dataVencimento = new Date(hoje.getFullYear(), hoje.getMonth(), utcData.getDate());
+                    if (dataVencimento < hoje) {
+                        dataVencimento.setMonth(dataVencimento.getMonth() + 1);
+                    }
+                    document.getElementById('proximoVencimento').textContent = dataVencimento.toLocaleDateString('pt-BR');
+
+                    // Status
+                    badge.textContent = matricula.status;
+                    if (matricula.status === 'Ativa') {
+                        badge.className = 'status-badge';
+                        document.getElementById('formaPagamento').textContent = 'Cartão de Crédito';
+                    } else {
+                        badge.className = 'status-badge inativa';
+                        document.getElementById('formaPagamento').textContent = 'Nenhuma';
+                    }
+                } else {
+                    // Fallback para o status_matricula da tabela cliente
+                    const status = cliente ? cliente.status_matricula : 'Inativa';
+                    badge.textContent = status;
+                    if (status === 'Ativa') {
+                        badge.className = 'status-badge';
+                        document.getElementById('formaPagamento').textContent = 'Cartão de Crédito';
+                    } else {
+                        badge.className = 'status-badge inativa';
+                        document.getElementById('formaPagamento').textContent = 'Nenhuma';
+                    }
+
+                    document.getElementById('dataInicio').textContent = 'N/A';
+                    document.getElementById('proximoVencimento').textContent = 'N/A';
+                }
+            } catch (error) {
+                console.error('Erro ao carregar matrícula:', error);
+            }
+        }
+
         function logout() {
             localStorage.removeItem('usuarioLogado');
             localStorage.removeItem('perfilLogado');
