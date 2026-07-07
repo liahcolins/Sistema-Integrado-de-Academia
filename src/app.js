@@ -100,6 +100,18 @@ app.get('/cliente/dashboard', (req, res) => {
 
 });
 
+app.get('/personal-trainer/dashboard', (req, res) => {
+    res.sendFile(
+        path.join(
+            __dirname,
+            'views',
+            'personalTrainer',
+            'dashboard.html'
+        )
+    );
+});
+
+
 app.get('/cliente/meu-treino', (req, res) => {
 
     res.sendFile(
@@ -113,18 +125,6 @@ app.get('/cliente/meu-treino', (req, res) => {
 
 });
 
-app.get('/cliente/evolucao', (req, res) => {
-
-    res.sendFile(
-        path.join(
-            __dirname,
-            'views',
-            'cliente',
-            'evolucao.html'
-        )
-    );
-
-});
 
 app.get('/cliente/minha-matricula', (req, res) => {
 
@@ -175,6 +175,18 @@ app.get('/admin/gerenciar-personais', (req, res) => {
         )
     );
 });
+
+app.get('/admin/gerenciar-matriculas', (req, res) => {
+    res.sendFile(
+        path.join(
+            __dirname,
+            'views',
+            'admin',
+            'gerenciar-matriculas.html'
+        )
+    );
+});
+
 
 app.listen(PORT, () => {
     console.log(
@@ -430,4 +442,95 @@ app.post('/api/usuarios/:id/rejeitar', (req, res) => {
         });
     });
 });
+
+// Alterar tabela cliente para adicionar coluna personal_id se não existir
+const addColumnSql = `ALTER TABLE cliente ADD COLUMN personal_id INT NULL`;
+const addConstraintSql = `ALTER TABLE cliente ADD CONSTRAINT fk_cliente_personal FOREIGN KEY (personal_id) REFERENCES personal_trainer(id) ON DELETE SET NULL`;
+
+db.query(addColumnSql, (err) => {
+    if (!err) {
+        db.query(addConstraintSql, (errConst) => {
+            if (errConst) console.error('Erro ao criar constraint fk_cliente_personal:', errConst);
+        });
+    }
+});
+
+// Criar tabela solicitacao_treino se não existir
+const createTableSql = `
+CREATE TABLE IF NOT EXISTS solicitacao_treino (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    cliente_id INT NOT NULL,
+    cliente_nome VARCHAR(100) NOT NULL,
+    personal_id INT NOT NULL,
+    objetivo VARCHAR(100) NOT NULL,
+    observacoes TEXT NOT NULL,
+    data VARCHAR(30) NOT NULL,
+    status VARCHAR(20) NOT NULL DEFAULT 'Pendente'
+);
+`;
+
+const addPTColumnSql = `ALTER TABLE solicitacao_treino ADD COLUMN personal_id INT NOT NULL DEFAULT 0`;
+
+db.query(createTableSql, (err) => {
+    if (err) {
+        console.error('Erro ao criar tabela solicitacao_treino:', err);
+    } else {
+        console.log('Tabela solicitacao_treino verificada/criada com sucesso');
+        db.query(addPTColumnSql, () => {});
+    }
+});
+
+// APIs para Solicitações de Treino
+app.post('/api/solicitacoes-treino', (req, res) => {
+    const { cliente_id, cliente_nome, personal_id, objetivo, observacoes, data } = req.body;
+    const sql = 'INSERT INTO solicitacao_treino (cliente_id, cliente_nome, personal_id, objetivo, observacoes, data, status) VALUES (?, ?, ?, ?, ?, ?, ?)';
+    db.query(sql, [cliente_id, cliente_nome, personal_id, objetivo, observacoes, data, 'Pendente'], (err, result) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ erro: 'Erro ao cadastrar solicitação' });
+        }
+        res.status(201).json({ sucesso: true, id: result.insertId });
+    });
+});
+
+app.get('/api/solicitacoes-treino', (req, res) => {
+    const sql = 'SELECT * FROM solicitacao_treino';
+    db.query(sql, (err, results) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ erro: 'Erro ao buscar solicitações' });
+        }
+        res.json(results);
+    });
+});
+
+app.put('/api/solicitacoes-treino/:id/aprovar', (req, res) => {
+    const id = req.params.id;
+    const sql = 'UPDATE solicitacao_treino SET status = ? WHERE id = ?';
+    db.query(sql, ['Aprovado', id], (err, result) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ erro: 'Erro ao aprovar solicitação' });
+        }
+        res.json({ sucesso: true });
+    });
+});
+
+// Obter detalhes do cliente logado (como personal_id associado)
+app.get('/api/cliente-detalhes/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = 'SELECT id, nome, email, status_matricula, personal_id FROM cliente WHERE id = ?';
+    db.query(sql, [id], (err, results) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ erro: 'Erro ao buscar detalhes do cliente' });
+        }
+        if (results.length === 0) {
+            return res.status(404).json({ error: 'Cliente não encontrado' });
+        }
+        res.json(results[0]);
+    });
+});
+
+
 

@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Personal Trainer - FitCore</title>
+
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+
+    <!-- CSS base (topbar + navbar) -->
+    <link rel="stylesheet" href="/css/landing.css">
+    <!-- CSS de dashboard (cards + layouts) -->
+    <link rel="stylesheet" href="/css/dashboard.css">
+    <!-- CSS de tabelas e listas -->
+    <link rel="stylesheet" href="/css/gerenciar-clientes.css">
+
+    <style>
+        .personal-page {
+            min-height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.85)), url('/img/fundo-academia.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: white;
+        }
+
+        .personal-content {
+            padding: 170px 90px 60px;
+        }
+
+        .personal-header h1 {
+            color: white;
+            font-size: 72px;
+            font-family: 'Oswald', sans-serif;
+            margin-bottom: 20px;
+        }
+
+        .personal-header h1 span {
+            color: #dc2626;
+        }
+
+        .nav-tab-btn {
+            background: transparent;
+            border: none;
+            color: #aaa;
+            font-family: 'Oswald', sans-serif;
+            font-size: 18px;
+            text-transform: uppercase;
+            padding: 10px 20px;
+            cursor: pointer;
+            position: relative;
+            transition: 0.3s;
+        }
+
+        .nav-tab-btn.active {
+            color: #dc2626;
+        }
+
+        .nav-tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 20px;
+            right: 20px;
+            height: 3px;
+            background: #dc2626;
+            border-radius: 2px;
+        }
+
+        .personal-actions-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .filter-select {
+            background: #111;
+            border: 1px solid #333;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 16px;
+            max-width: 320px;
+            width: 100%;
+        }
+
+        .approve-btn {
+            background: #22c55e;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .approve-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(34, 197, 94, 0.3);
+        }
+
+        .badge-status {
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .badge-pending {
+            background: rgba(234, 179, 8, 0.15);
+            color: #eab308;
+            border: 1px solid rgba(234, 179, 8, 0.3);
+        }
+
+        .badge-approved {
+            background: rgba(34, 197, 94, 0.15);
+            color: #22c55e;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+    </style>
+</head>
+<body class="personal-page">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+        <span>
+            <i class="material-symbols-outlined">location_on</i>
+            São Luís - MA
+        </span>
+
+        <span>
+            <i class="material-symbols-outlined">call</i>
+            (98) 99999-9999
+        </span>
+
+        <span>
+            <i class="material-symbols-outlined">mail</i>
+            contato@fitcore.com
+        </span>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav class="landing-navbar">
+        <h2 class="landing-logo">FIT<span>CORE</span></h2>
+
+        <ul>
+            <li><button class="nav-tab-btn active" onclick="switchTab('overview')">Dashboard</button></li>
+            <li><button class="nav-tab-btn" onclick="switchTab('requests')">Treinos Solicitados</button></li>
+        </ul>
+
+        <div class="nav-buttons">
+            <button class="btn-login" onclick="logout()">SAIR</button>
+        </div>
+    </nav>
+
+    <!-- CONTENT -->
+    <main class="personal-content">
+        <div class="personal-header">
+            <p class="section-mini" id="trainerGreeting">ÁREA DO PERSONAL TRAINER</p>
+            <h1>Painel do <span>Personal</span></h1>
+        </div>
+
+        <!-- TAB 1: VISÃO GERAL -->
+        <div id="tab-overview" class="tab-content active">
+            <div class="personal-actions-grid">
+                <div class="admin-card">
+                    <h3>Total de Alunos</h3>
+                    <p id="statTotalAlunos" style="font-size: 32px; font-weight: 700; color: white; margin-top: 10px;">0</p>
+                </div>
+                <div class="admin-card">
+                    <h3>Treinos Pendentes</h3>
+                    <p id="statPendentes" style="font-size: 32px; font-weight: 700; color: #eab308; margin-top: 10px;">0</p>
+                </div>
+                <div class="admin-card">
+                    <h3>Treinos Aprovados</h3>
+                    <p id="statAprovados" style="font-size: 32px; font-weight: 700; color: #22c55e; margin-top: 10px;">0</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: SOLICITAÇÕES DE TREINO -->
+        <div id="tab-requests" class="tab-content">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h3 class="font-oswald" style="font-family: 'Oswald', sans-serif; font-size: 28px; margin: 0;">Solicitações de Alunos</h3>
+                
+                <!-- SELECIONAR CLIENTE -->
+                <div>
+                    <select id="selectClienteFiltro" class="filter-select" onchange="filtrarPorCliente()">
+                        <option value="">Todos os Clientes</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="clientes-table-card">
+                <table class="clientes-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 15%; text-align: left;">Cliente</th>
+                            <th style="width: 20%; text-align: left;">Objetivo</th>
+                            <th style="width: 35%; text-align: left;">Observações</th>
+                            <th style="width: 12%; text-align: center;">Data Envio</th>
+                            <th style="width: 10%; text-align: center;">Status</th>
+                            <th style="width: 8%; text-align: center;">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="solicitacoesTableBody">
+                        <tr>
+                            <td colspan="6" style="text-align: center; color: #888;">Nenhuma solicitação encontrada.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const personalLogado = JSON.parse(localStorage.getItem('usuarioLogado') || '{}');
+        let solicitacoes = [];
+        let clientes = [];
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            if (personalLogado.nome) {
+                document.getElementById('trainerGreeting').textContent = `ÁREA DO PERSONAL TRAINER: ${personalLogado.nome.toUpperCase()}`;
+            }
+            await carregarDados();
+        });
+
+        async function carregarDados() {
+            try {
+                // Carregar clientes do banco de dados
+                const resClientes = await fetch('/clientes');
+                clientes = await resClientes.json();
+
+                // Popular dropdown de filtro (apenas com alunos deste personal)
+                const meusAlunos = clientes.filter(c => c.personal_id === personalLogado.id);
+                const select = document.getElementById('selectClienteFiltro');
+                select.innerHTML = '<option value="">Todos os Meus Alunos</option>';
+                meusAlunos.forEach(c => {
+                    select.innerHTML += `<option value="${c.id}">${c.nome}</option>`;
+                });
+
+                // Carregar solicitações da API do servidor e filtrar pelo personal logado
+                const resSolicitacoes = await fetch('/api/solicitacoes-treino');
+                const todas = await resSolicitacoes.json();
+                solicitacoes = todas.filter(s => s.personal_id === personalLogado.id);
+
+                atualizarEstatisticas();
+                renderizarSolicitacoes();
+            } catch (err) {
+                console.error('Erro ao carregar dados:', err);
+            }
+        }
+
+        async function aprovarTreino(id) {
+            try {
+                const resposta = await fetch(`/api/solicitacoes-treino/${id}/aprovar`, {
+                    method: 'PUT'
+                });
+
+                if (resposta.ok) {
+                    alert('Solicitação de treino aprovada com sucesso!');
+                    await carregarDados();
+                } else {
+                    alert('Erro ao aprovar solicitação.');
+                }
+            } catch (err) {
+                console.error('Erro ao aprovar:', err);
+                alert('Erro ao conectar ao servidor.');
+            }
+        }
+
+        function atualizarEstatisticas() {
+            const meusAlunos = clientes.filter(c => c.personal_id === personalLogado.id);
+            document.getElementById('statTotalAlunos').textContent = meusAlunos.length;
+            
+            const pendentes = solicitacoes.filter(s => s.status === 'Pendente').length;
+            const aprovados = solicitacoes.filter(s => s.status === 'Aprovado').length;
+
+            document.getElementById('statPendentes').textContent = pendentes;
+            document.getElementById('statAprovados').textContent = aprovados;
+        }
+
+        function renderizarSolicitacoes() {
+            const selectVal = document.getElementById('selectClienteFiltro').value;
+            const tbody = document.getElementById('solicitacoesTableBody');
+            tbody.innerHTML = '';
+
+            let filtradas = solicitacoes;
+            if (selectVal) {
+                filtradas = solicitacoes.filter(s => s.cliente_id === parseInt(selectVal));
+            }
+
+            if (filtradas.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: #888; padding: 25px;">Nenhuma solicitação cadastrada para o filtro selecionado.</td></tr>';
+                return;
+            }
+
+            filtradas.forEach(s => {
+                const status = s.status || 'Pendente';
+                const isPendente = status === 'Pendente';
+                const statusBadge = isPendente 
+                    ? `<span class="badge-status badge-pending">Pendente</span>`
+                    : `<span class="badge-status badge-approved">Aprovado</span>`;
+
+                const acaoBotao = isPendente
+                    ? `<button class="approve-btn" onclick="aprovarTreino(${s.id})">Aprovar</button>`
+                    : `<span style="color: #22c55e; font-weight: 500;">-</span>`;
+
+                tbody.innerHTML += `
+                    <tr>
+                        <td style="text-align: left;">${s.cliente_nome || 'Aluno'}</td>
+                        <td style="text-align: left;">${s.objetivo}</td>
+                        <td style="text-align: left;">${s.observacoes}</td>
+                        <td style="text-align: center;">${s.data}</td>
+                        <td style="text-align: center;">${statusBadge}</td>
+                        <td style="text-align: center;">${acaoBotao}</td>
+                    </tr>
+                `;
+            });
+        }
+
+        function filtrarPorCliente() {
+            renderizarSolicitacoes();
+        }
+
+        function switchTab(tabId) {
+            // Alternar classe active nos botões
+            const buttons = document.querySelectorAll('.nav-tab-btn');
+            buttons.forEach(btn => {
+                if (btn.getAttribute('onclick').includes(tabId)) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            // Alternar visibilidade das abas
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => {
+                if (content.id === `tab-${tabId}`) {
+                    content.classList.add('active');
+                } else {
+                    content.classList.remove('active');
+                }
+            });
+        }
+
+        function logout() {
+            localStorage.removeItem('usuarioLogado');
+            localStorage.removeItem('perfilLogado');
+            window.location.href = '/login';
+        }
+    </script>
+</body>
+</html>

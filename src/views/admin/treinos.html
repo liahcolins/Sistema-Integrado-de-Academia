@@ -1,216 +1,183 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
+    <title>Gerenciar Treinos - FitCore</title>
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
 
-    <title>Treinos - FitCore</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link
-        rel="stylesheet"
-        href="/bootstrap/css/bootstrap.min.css"
-    >
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
 
-    <link
-        rel="stylesheet"
-        href="/css/style.css"
-    >
+    <link rel="stylesheet" href="/css/landing.css">
+    <link rel="stylesheet" href="/css/gerenciar-clientes.css">
+    <style>
+        .col-id-t { width: 8%; text-align: center; }
+        .col-nome-t { width: 22%; text-align: left; }
+        .col-cliente-t { width: 18%; text-align: left; }
+        .col-personal-t { width: 18%; text-align: left; }
+        .col-data-t { width: 12%; text-align: center; }
+        .col-obs-t { width: 12%; text-align: left; }
+        .col-acoes-t { width: 10%; text-align: center; }
+
+        .clientes-table td:nth-child(1),
+        .clientes-table td:nth-child(5),
+        .clientes-table td:nth-child(7) {
+            text-align: center;
+        }
+
+        .modal-fitcore select, .modal-fitcore textarea {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 15px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            color: white;
+            border-radius: 8px;
+        }
+    </style>
 </head>
-
 <body>
 
-    <div class="dashboard-container">
+<!-- TOPBAR -->
+<div class="topbar">
+    <span>
+        <i class="material-symbols-outlined">location_on</i>
+        São Luís - MA
+    </span>
 
-        <aside class="sidebar">
+    <span>
+        <i class="material-symbols-outlined">call</i>
+        (98) 99999-9999
+    </span>
 
-            <h2 class="logo">
-                FIT<span>CORE</span>
-            </h2>
+    <span>
+        <i class="material-symbols-outlined">mail</i>
+        contato@fitcore.com
+    </span>
+</div>
 
-            <nav>
-                <ul>
-                    <li>
-                        <a href="/">
-                            Dashboard
-                        </a>
-                    </li>
+<!-- NAVBAR -->
+<nav class="landing-navbar">
+    <h2 class="landing-logo">FIT<span>CORE</span></h2>
 
-                    <li>
-                        <a href="/admin/clientes">
-                            Clientes
-                        </a>
-                    </li>
+    <ul>
+        <li><a href="/admin/dashboard">Dashboard</a></li>
+        <li><a href="/admin/gerenciar-clientes">Clientes</a></li>
+        <li><a href="/admin/gerenciar-personais">Personais</a></li>
+        <li><a href="/admin/gerenciar-exercicios">Exercícios</a></li>
+        <li><a class="active" href="/admin/treinos">Treinos</a></li>
+        <li><a href="/admin/usuarios-pendentes">Aprovações</a></li>
+        <li><a href="/admin/gerenciar-matriculas">Matrículas</a></li>
+    </ul>
 
-                    <li>
-                        <a href="#">
-                            Personais
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="#">
-                            Exercícios
-                        </a>
-                    </li>
-
-                    <li>
-                        <a
-                            href="/admin/treinos"
-                            class="active"
-                        >
-                            Treinos
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="/admin/usuarios-pendentes">
-                            Aprovações
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="#">
-                            Matrículas
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-
-        </aside>
-
-        <main class="content">
-
-            <div class="page-header">
-
-                <h1>
-                    Treinos
-                </h1>
-
-                <button
-                    class="btn btn-danger"
-                    data-bs-toggle="modal"
-                    data-bs-target="#modalTreino"
-                >
-                    + Novo Treino
-                </button>
-
-            </div>
-
-            <div class="table-container">
-
-                <table class="table table-dark table-hover align-middle">
-
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Nome</th>
-                            <th>Cliente</th>
-                            <th>Personal</th>
-                            <th>Data</th>
-                            <th>Observações</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-
-                    <tbody id="treinosTable">
-                    </tbody>
-
-                </table>
-
-            </div>
-
-        </main>
-
+    <div class="nav-buttons">
+        <button class="btn-login" onclick="window.location.href='/login'">SAIR</button>
     </div>
+</nav>
 
-    <div
-        class="modal fade"
-        id="modalTreino"
-        tabindex="-1"
-    >
+<section class="clientes-page">
+    <div class="clientes-content">
 
-        <div class="modal-dialog">
-
-            <div class="modal-content bg-dark text-light">
-
-                <div class="modal-header">
-
-                    <h5>
-                        Cadastrar Treino
-                    </h5>
-
-                    <button
-                        class="btn-close btn-close-white"
-                        data-bs-dismiss="modal"
-                    ></button>
-
-                </div>
-
-                <div class="modal-body">
-
-                    <form id="treinoForm">
-
-                        <input
-                            type="text"
-                            id="nome"
-                            class="form-control mb-3"
-                            placeholder="Nome do treino"
-                            required
-                        >
-
-                        <input
-                            type="date"
-                            id="data_criacao"
-                            class="form-control mb-3"
-                            required
-                        >
-
-                        <textarea
-                            id="observacoes"
-                            class="form-control mb-3"
-                            placeholder="Observações"
-                        ></textarea>
-
-                        <input
-                            type="number"
-                            id="cliente_id"
-                            class="form-control mb-3"
-                            placeholder="ID do cliente"
-                            required
-                        >
-
-                        <input
-                            type="number"
-                            id="personal_id"
-                            class="form-control mb-3"
-                            placeholder="ID do personal"
-                            required
-                        >
-
-                        <button
-                            class="btn btn-danger w-100"
-                            type="submit"
-                        >
-                            Salvar
-                        </button>
-
-                    </form>
-
-                </div>
-
+        <div class="clientes-header">
+            <div>
+                <p class="section-mini">GERENCIAMENTO</p>
+                <h1>Treinos</h1>
             </div>
 
+            <button
+                class="btn-register"
+                data-bs-toggle="modal"
+                data-bs-target="#modalTreino"
+            >
+                + Novo Treino
+            </button>
+        </div>
+
+        <div class="clientes-table-card">
+            <table class="clientes-table">
+                <thead>
+                    <tr>
+                        <th class="col-id-t">ID</th>
+                        <th class="col-nome-t">Nome</th>
+                        <th class="col-cliente-t">Cliente</th>
+                        <th class="col-personal-t">Personal</th>
+                        <th class="col-data-t">Data</th>
+                        <th class="col-obs-t">Observações</th>
+                        <th class="col-acoes-t">Ações</th>
+                    </tr>
+                </thead>
+
+                <tbody id="treinosTable">
+                    <tr>
+                        <td colspan="7" style="text-align: center;">Carregando treinos...</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
     </div>
+</section>
 
-    <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="/js/treinos.js"></script>
+<!-- MODAL CADASTRAR TREINO -->
+<div class="modal fade" id="modalTreino" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content modal-fitcore">
+
+            <div class="modal-header">
+                <h5>Cadastrar Treino</h5>
+                <button
+                    class="btn-close btn-close-white"
+                    data-bs-dismiss="modal"
+                ></button>
+            </div>
+
+            <div class="modal-body">
+                <form id="treinoForm">
+                    <div class="mb-3">
+                        <label for="nome" style="color: white; margin-bottom: 5px;">Nome do Treino</label>
+                        <input type="text" id="nome" placeholder="Digite o nome do treino" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="data_criacao" style="color: white; margin-bottom: 5px;">Data de Criação</label>
+                        <input type="date" id="data_criacao" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="cliente_id" style="color: white; margin-bottom: 5px;">Cliente</label>
+                        <select id="cliente_id" required>
+                            <option value="">Selecione o Cliente</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="personal_id" style="color: white; margin-bottom: 5px;">Personal Trainer</label>
+                        <select id="personal_id" required>
+                            <option value="">Selecione o Personal</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="observacoes" style="color: white; margin-bottom: 5px;">Observações</label>
+                        <textarea id="observacoes" placeholder="Observações ou orientações sobre o treino" rows="3"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-register w-100 mt-2">
+                        Salvar
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/js/treinos.js"></script>
 
 </body>
 </html>

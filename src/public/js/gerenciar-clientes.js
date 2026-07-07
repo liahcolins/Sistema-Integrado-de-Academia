@@ -1,12 +1,29 @@
 let clienteEditando = null;
+let personais = [];
 
 document.addEventListener('DOMContentLoaded', () => {
     carregarClientes();
+    carregarPersonais();
 
     document
         .getElementById('clienteForm')
         .addEventListener('submit', cadastrarCliente);
 });
+
+async function carregarPersonais() {
+    try {
+        const resposta = await fetch('/personal-trainers');
+        personais = await resposta.json();
+        
+        const select = document.getElementById('personal_id');
+        select.innerHTML = '<option value="">Sem Personal Trainer</option>';
+        personais.forEach(p => {
+            select.innerHTML += `<option value="${p.id}">${p.nome}</option>`;
+        });
+    } catch (err) {
+        console.error('Erro ao carregar personais:', err);
+    }
+}
 
 async function carregarClientes() {
     const resposta = await fetch('/clientes');
@@ -16,12 +33,14 @@ async function carregarClientes() {
     tabela.innerHTML = '';
 
     clientes.forEach(cliente => {
+        const personalNome = cliente.personal_nome || 'Nenhum';
         tabela.innerHTML += `
             <tr>
                 <td>${cliente.id}</td>
                 <td>${cliente.nome}</td>
                 <td>${cliente.email}</td>
                 <td>${cliente.status_matricula}</td>
+                <td>${personalNome}</td>
 
                 <td>
                     <div class="action-buttons">
@@ -31,7 +50,8 @@ async function carregarClientes() {
                                 ${cliente.id},
                                 '${cliente.nome}',
                                 '${cliente.email}',
-                                '${cliente.status_matricula}'
+                                '${cliente.status_matricula}',
+                                ${cliente.personal_id || 'null'}
                             )"
                         >
                             Editar
@@ -57,12 +77,14 @@ async function cadastrarCliente(evento) {
     const email = document.getElementById('email').value;
     const senha = document.getElementById('senha').value;
     const status_matricula = document.getElementById('status_matricula').value;
+    const personal_id = document.getElementById('personal_id').value || null;
 
     const dados = {
         nome,
         email,
         senha,
-        status_matricula
+        status_matricula,
+        personal_id
     };
 
     let resposta;
@@ -109,13 +131,36 @@ async function deletarCliente(id) {
     carregarClientes();
 }
 
-function abrirEditarCliente(id, nome, email, status) {
+function abrirNovoCliente() {
+    clienteEditando = null;
+
+    document.getElementById('clienteForm').reset();
+    document.getElementById('modalTitle').textContent = 'Cadastrar Cliente';
+
+    const inputSenha = document.getElementById('senha');
+    inputSenha.setAttribute('required', 'true');
+    inputSenha.placeholder = 'Senha';
+
+    const modal = new bootstrap.Modal(
+        document.getElementById('modalCliente')
+    );
+
+    modal.show();
+}
+
+function abrirEditarCliente(id, nome, email, status, personalId) {
     clienteEditando = id;
 
     document.getElementById('nome').value = nome;
     document.getElementById('email').value = email;
-    document.getElementById('senha').value = '';
     document.getElementById('status_matricula').value = status;
+    document.getElementById('personal_id').value = personalId || '';
+    document.getElementById('modalTitle').textContent = 'Editar Cliente';
+
+    const inputSenha = document.getElementById('senha');
+    inputSenha.value = '';
+    inputSenha.removeAttribute('required');
+    inputSenha.placeholder = 'Senha (deixe em branco para manter)';
 
     const modal = new bootstrap.Modal(
         document.getElementById('modalCliente')

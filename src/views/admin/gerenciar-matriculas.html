@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Gerenciar Matrículas - FitCore</title>
+
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+
+    <link rel="stylesheet" href="/css/landing.css">
+    <link rel="stylesheet" href="/css/gerenciar-clientes.css">
+    <link rel="stylesheet" href="/css/gerenciar-matriculas.css">
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+    <span>
+        <i class="material-symbols-outlined">location_on</i>
+        São Luís - MA
+    </span>
+
+    <span>
+        <i class="material-symbols-outlined">call</i>
+        (98) 99999-9999
+    </span>
+
+    <span>
+        <i class="material-symbols-outlined">mail</i>
+        contato@fitcore.com
+    </span>
+</div>
+
+<!-- NAVBAR -->
+<nav class="landing-navbar">
+    <h2 class="landing-logo">FIT<span>CORE</span></h2>
+
+    <ul>
+        <li><a href="/admin/dashboard">Dashboard</a></li>
+        <li><a href="/admin/gerenciar-clientes">Clientes</a></li>
+        <li><a href="/admin/gerenciar-personais">Personais</a></li>
+        <li><a href="/admin/gerenciar-exercicios">Exercícios</a></li>
+        <li><a href="/admin/treinos">Treinos</a></li>
+        <li><a href="/admin/usuarios-pendentes">Aprovações</a></li>
+        <li><a class="active" href="/admin/gerenciar-matriculas">Matrículas</a></li>
+    </ul>
+
+    <div class="nav-buttons">
+        <button class="btn-login" onclick="window.location.href='/login'">SAIR</button>
+    </div>
+</nav>
+
+<section class="clientes-page">
+    <div class="clientes-content">
+
+        <div class="clientes-header">
+            <div>
+                <p class="section-mini">GERENCIAMENTO</p>
+                <h1>Matrículas</h1>
+            </div>
+
+            <div class="header-actions">
+                <div class="filter-container">
+                    <button class="filter-btn active" onclick="filtrarMatriculas('Todas')">Todas</button>
+                    <button class="filter-btn" onclick="filtrarMatriculas('Ativa')">Ativas</button>
+                    <button class="filter-btn" onclick="filtrarMatriculas('Inativa')">Inativas</button>
+                </div>
+                <button
+                    class="btn-register"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modalMatricula"
+                    onclick="abrirNovoCadastro()"
+                >
+                    + Nova Matrícula
+                </button>
+            </div>
+        </div>
+
+        <div class="clientes-table-card">
+            <table class="clientes-table">
+                <thead>
+                    <tr>
+                        <th class="col-id-mat">ID</th>
+                        <th class="col-cliente-mat">Cliente</th>
+                        <th class="col-data-mat">Data de Início</th>
+                        <th class="col-status-mat">Status</th>
+                        <th class="col-acoes-mat">Ações</th>
+                    </tr>
+                </thead>
+
+                <tbody id="matriculasTable">
+                    <tr>
+                        <td colspan="5" style="text-align: center;">Carregando matrículas...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</section>
+
+<!-- MODAL CADASTRAR/EDITAR MATRÍCULA -->
+<div class="modal fade" id="modalMatricula" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content modal-fitcore">
+
+            <div class="modal-header">
+                <h5 id="modalMatriculaTitle">Cadastrar Matrícula</h5>
+                <button
+                    class="btn-close btn-close-white"
+                    data-bs-dismiss="modal"
+                ></button>
+            </div>
+
+            <div class="modal-body">
+                <form id="matriculaForm">
+                    <div class="mb-3">
+                        <label for="cliente_id" class="form-label" style="color: white;">Cliente</label>
+                        <select id="cliente_id" required>
+                            <option value="">Selecione o Cliente</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="data_inicio" class="form-label" style="color: white;">Data de Início</label>
+                        <input type="date" id="data_inicio" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="status" class="form-label" style="color: white;">Status</label>
+                        <select id="status" required>
+                            <option value="Ativa">Ativa</option>
+                            <option value="Inativa">Inativa</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn-register w-100 mt-3">
+                        Salvar
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/js/gerenciar-matriculas.js"></script>
+
+</body>
+</html>
