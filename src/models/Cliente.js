@@ -37,28 +37,24 @@ class Cliente {
     }
 
     static atualizar(id, dados, callback) {
-
-        const sql = `
+        let sql = `
             UPDATE cliente
             SET
                 nome = ?,
                 email = ?,
-                senha = ?,
                 status_matricula = ?
-            WHERE id = ?
         `;
+        const params = [dados.nome, dados.email, dados.status_matricula];
 
-        db.query(
-            sql,
-            [
-                dados.nome,
-                dados.email,
-                dados.senha,
-                dados.status_matricula,
-                id
-            ],
-            callback
-        );
+        if (dados.senha && dados.senha.trim() !== '') {
+            sql += `, senha = ?`;
+            params.push(dados.senha);
+        }
+
+        sql += ` WHERE id = ?`;
+        params.push(id);
+
+        db.query(sql, params, callback);
     }
 
     static excluir(id, callback) {

@@ -220,6 +220,8 @@
 
     <script>
         function logout() {
+            localStorage.removeItem('usuarioLogado');
+            localStorage.removeItem('perfilLogado');
             window.location.href = '/login';
         }
     </script>

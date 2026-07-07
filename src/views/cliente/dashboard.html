@@ -48,7 +48,7 @@
         </ul>
 
         <div class="nav-buttons">
-            <button class="btn-login">SAIR</button>
+            <button class="btn-login" onclick="logout()">SAIR</button>
         </div>
     </nav>
 
@@ -98,5 +98,12 @@
 
     </main>
 
+    <script>
+        function logout() {
+            localStorage.removeItem('usuarioLogado');
+            localStorage.removeItem('perfilLogado');
+            window.location.href = '/login';
+        }
+    </script>
 </body>
 </html>
