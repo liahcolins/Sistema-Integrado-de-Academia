@@ -10,6 +10,7 @@ const administradorRoutes = require('./routes/administradorRoutes');
 const treinoRoutes = require('./routes/treinoRoutes');
 const matriculaRoutes = require('./routes/matriculaRoutes');
 const itemTreinoRoutes = require('./routes/itemTreinoRoutes');
+const Usuario = require('./models/Usuario');
 
 
 const app = express();
@@ -262,7 +263,25 @@ app.post('/api/login', (req, res) => {
                     });
                 }
 
-                return res.status(401).json({ erro: 'E-mail ou senha incorretos' });
+                // 4. Verificar na tabela usuario (pendente de aprovação)
+                const sqlUsuario = 'SELECT id, nome, email, status FROM usuario WHERE email = ? AND senha = ?';
+                db.query(sqlUsuario, [email, senha], (err, resultsUsuario) => {
+                    if (err) {
+                        console.error('Erro ao buscar usuario pendente:', err);
+                        return res.status(500).json({ erro: 'Erro interno do servidor' });
+                    }
+
+                    if (resultsUsuario.length > 0) {
+                        return res.json({
+                            sucesso: true,
+                            perfil: 'usuario_pendente',
+                            usuario: resultsUsuario[0],
+                            redirecionar: '/usuario/pendente'
+                        });
+                    }
+
+                    return res.status(401).json({ erro: 'E-mail ou senha incorretos' });
+                });
             });
         });
     });
@@ -278,5 +297,137 @@ app.get('/admin/gerenciar-exercicios', (req, res) => {
             'gerenciar-exercicios.html'
         )
     );
+});
+
+// Rotas de visualização para Usuários Pendentes
+app.get('/usuario/pendente', (req, res) => {
+    res.sendFile(
+        path.join(
+            __dirname,
+            'views',
+            'usuario',
+            'pendente.html'
+        )
+    );
+});
+
+app.get('/admin/usuarios-pendentes', (req, res) => {
+    res.sendFile(
+        path.join(
+            __dirname,
+            'views',
+            'admin',
+            'usuarios-pendentes.html'
+        )
+    );
+});
+
+// API de Cadastro Público de Usuário
+app.post('/usuarios', (req, res) => {
+    const { nome, email, senha } = req.body;
+
+    if (!nome || !email || !senha) {
+        return res.status(400).json({ erro: 'Todos os campos são obrigatórios' });
+    }
+
+    // Verificar se o e-mail já existe em algum perfil do sistema para evitar duplicidade
+    const sqlCheck = `
+        SELECT email FROM administrador WHERE email = ?
+        UNION
+        SELECT email FROM personal_trainer WHERE email = ?
+        UNION
+        SELECT email FROM cliente WHERE email = ?
+        UNION
+        SELECT email FROM usuario WHERE email = ?
+    `;
+
+    db.query(sqlCheck, [email, email, email, email], (err, results) => {
+        if (err) {
+            console.error('Erro ao verificar email existente:', err);
+            return res.status(500).json({ erro: 'Erro interno do servidor ao validar e-mail' });
+        }
+
+        if (results.length > 0) {
+            return res.status(400).json({ erro: 'Este e-mail já está cadastrado no sistema' });
+        }
+
+        Usuario.criar({ nome, email, senha, status: 'Pendente' }, (erro, resultado) => {
+            if (erro) {
+                console.error('Erro ao cadastrar usuario:', erro);
+                return res.status(500).json({ erro: 'Erro ao cadastrar usuário' });
+            }
+
+            res.status(201).json({
+                mensagem: 'Cadastro realizado com sucesso! Aguarde a aprovação do administrador.',
+                id: resultado.insertId
+            });
+        });
+    });
+});
+
+// API Administrativa: Listar usuários pendentes
+app.get('/api/usuarios/pendentes', (req, res) => {
+    Usuario.listarPendentes((erro, resultados) => {
+        if (erro) {
+            console.error('Erro ao listar usuários pendentes:', erro);
+            return res.status(500).json({ erro: 'Erro ao buscar usuários pendentes' });
+        }
+        res.json(resultados);
+    });
+});
+
+// API Administrativa: Aprovar usuário pendente
+app.post('/api/usuarios/:id/aprovar', (req, res) => {
+    const id = req.params.id;
+
+    Usuario.buscarPorId(id, (erro, usuario) => {
+        if (erro) {
+            console.error('Erro ao buscar usuário para aprovação:', erro);
+            return res.status(500).json({ erro: 'Erro interno ao buscar usuário' });
+        }
+
+        if (!usuario) {
+            return res.status(404).json({ erro: 'Usuário não encontrado' });
+        }
+
+        const Cliente = require('./models/Cliente');
+        Cliente.criar({
+            nome: usuario.nome,
+            email: usuario.email,
+            senha: usuario.senha,
+            status_matricula: 'Ativa'
+        }, (erroCriar, resultadoCriar) => {
+            if (erroCriar) {
+                console.error('Erro ao criar cliente na aprovação:', erroCriar);
+                return res.status(500).json({ erro: 'Erro ao converter usuário em cliente' });
+            }
+
+            Usuario.excluir(id, (erroExcluir) => {
+                if (erroExcluir) {
+                    console.error('Erro ao remover usuário aprovado da fila:', erroExcluir);
+                }
+
+                res.json({
+                    mensagem: 'Usuário aprovado com sucesso! Agora é um cliente.'
+                });
+            });
+        });
+    });
+});
+
+// API Administrativa: Rejeitar usuário pendente
+app.post('/api/usuarios/:id/rejeitar', (req, res) => {
+    const id = req.params.id;
+
+    Usuario.excluir(id, (erro) => {
+        if (erro) {
+            console.error('Erro ao rejeitar usuário:', erro);
+            return res.status(500).json({ erro: 'Erro ao rejeitar usuário' });
+        }
+
+        res.json({
+            mensagem: 'Usuário rejeitado e cadastro excluído.'
+        });
+    });
 });
 

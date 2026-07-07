@@ -8,6 +8,14 @@ CREATE TABLE administrador (
     senha VARCHAR(255) NOT NULL
 );
 
+CREATE TABLE usuario (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    senha VARCHAR(255) NOT NULL,
+    status VARCHAR(20) NOT NULL DEFAULT 'Pendente'
+);
+
 CREATE TABLE personal_trainer (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
