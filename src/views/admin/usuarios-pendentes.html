@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Aprovações - FitCore</title>
+
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+
+    <link rel="stylesheet" href="/css/landing.css">
+    <link rel="stylesheet" href="/css/gerenciar-clientes.css">
+</head>
+
+<body>
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+        <span>
+            <i class="material-symbols-outlined">location_on</i>
+            São Luís - MA
+        </span>
+
+        <span>
+            <i class="material-symbols-outlined">call</i>
+            (98) 99999-9999
+        </span>
+
+        <span>
+            <i class="material-symbols-outlined">mail</i>
+            contato@fitcore.com
+        </span>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav class="landing-navbar">
+        <h2 class="landing-logo">FIT<span>CORE</span></h2>
+
+        <ul>
+            <li><a href="/admin/dashboard">Dashboard</a></li>
+            <li><a href="/admin/gerenciar-clientes">Clientes</a></li>
+            <li><a href="/admin/gerenciar-personais">Personais</a></li>
+            <li><a href="/admin/gerenciar-exercicios">Exercícios</a></li>
+            <li><a href="/admin/treinos">Treinos</a></li>
+            <li><a class="active" href="/admin/usuarios-pendentes">Aprovações</a></li>
+        </ul>
+
+        <div class="nav-buttons">
+            <button class="btn-login" onclick="window.location.href='/login'">SAIR</button>
+        </div>
+    </nav>
+
+    <section class="clientes-page">
+
+        <div class="clientes-content">
+
+            <div class="clientes-header">
+                <div>
+                    <p class="section-mini">GERENCIAMENTO</p>
+                    <h1>Usuários Pendentes</h1>
+                </div>
+            </div>
+
+            <div class="clientes-table-card">
+                <table class="clientes-table">
+                    <thead>
+                        <tr>
+                            <th class="col-id">ID</th>
+                            <th class="col-nome">Nome</th>
+                            <th class="col-email">Email</th>
+                            <th class="col-status">Status</th>
+                            <th class="col-acoes">Ações</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="usuariosTable">
+                        <tr>
+                            <td colspan="5" style="text-align: center; color: #888; padding: 30px;">
+                                Carregando usuários pendentes...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </section>
+
+    <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            carregarPendentes();
+        });
+
+        async function carregarPendentes() {
+            try {
+                const resposta = await fetch('/api/usuarios/pendentes');
+                const usuarios = await resposta.json();
+
+                const tabela = document.getElementById('usuariosTable');
+                tabela.innerHTML = '';
+
+                if (usuarios.length === 0) {
+                    tabela.innerHTML = `
+                    <tr>
+                        <td colspan="5" style="text-align: center; color: #888; padding: 40px; font-size: 16px;">
+                            <span class="material-symbols-outlined" style="font-size: 48px; color: #555; display: block; margin-bottom: 10px;">check_circle</span>
+                            Nenhum usuário aguardando aprovação no momento.
+                        </td>
+                    </tr>
+                `;
+                    return;
+                }
+
+                usuarios.forEach(usuario => {
+                    tabela.innerHTML += `
+                    <tr>
+                        <td>${usuario.id}</td>
+                        <td>${usuario.nome}</td>
+                        <td>${usuario.email}</td>
+                        <td>
+                            <span style="background: rgba(234, 179, 8, 0.15); color: #eab308; border: 1px solid rgba(234, 179, 8, 0.3); padding: 4px 10px; border-radius: 4px; font-size: 14px; text-transform: uppercase;">
+                                ${usuario.status}
+                            </span>
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <button
+                                    class="edit-btn"
+                                    style="background: #10b981; border: none; padding: 8px 16px; border-radius: 4px; color: white; font-weight: bold; font-family: 'Oswald', sans-serif; text-transform: uppercase; cursor: pointer; transition: 0.2s;"
+                                    onclick="aprovarUsuario(${usuario.id}, '${usuario.nome}')"
+                                    onmouseover="this.style.background='#059669'"
+                                    onmouseout="this.style.background='#10b981'"
+                                >
+                                    Aprovar
+                                </button>
+
+                                <button
+                                    class="delete-btn"
+                                    style="background: #ef4444; border: none; padding: 8px 16px; border-radius: 4px; color: white; font-weight: bold; font-family: 'Oswald', sans-serif; text-transform: uppercase; cursor: pointer; transition: 0.2s; margin-left: 8px;"
+                                    onclick="rejeitarUsuario(${usuario.id}, '${usuario.nome}')"
+                                    onmouseover="this.style.background='#dc2626'"
+                                    onmouseout="this.style.background='#ef4444'"
+                                >
+                                    Rejeitar
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+                });
+            } catch (error) {
+                console.error('Erro ao buscar usuários:', error);
+                const tabela = document.getElementById('usuariosTable');
+                tabela.innerHTML = `
+                <tr>
+                    <td colspan="5" style="text-align: center; color: #ef4444; padding: 30px;">
+                        Erro ao carregar usuários pendentes. Tente novamente mais tarde.
+                    </td>
+                </tr>
+            `;
+            }
+        }
+
+        async function aprovarUsuario(id, nome) {
+            if (!confirm(`Deseja aprovar o cadastro de ${nome}?`)) return;
+
+            try {
+                const resposta = await fetch(`/api/usuarios/${id}/aprovar`, {
+                    method: 'POST'
+                });
+
+                if (resposta.ok) {
+                    alert(`Usuário ${nome} aprovado com sucesso!`);
+                    carregarPendentes();
+                } else {
+                    const dados = await resposta.json();
+                    alert(dados.erro || 'Erro ao aprovar usuário.');
+                }
+            } catch (error) {
+                console.error('Erro:', error);
+                alert('Ocorreu um erro ao conectar ao servidor.');
+            }
+        }
+
+        async function rejeitarUsuario(id, nome) {
+            if (!confirm(`Deseja REJEITAR e EXCLUIR o cadastro de ${nome}?`)) return;
+
+            try {
+                const resposta = await fetch(`/api/usuarios/${id}/rejeitar`, {
+                    method: 'POST'
+                });
+
+                if (resposta.ok) {
+                    alert(`Cadastro de ${nome} rejeitado.`);
+                    carregarPendentes();
+                } else {
+                    const dados = await resposta.json();
+                    alert(dados.erro || 'Erro ao rejeitar usuário.');
+                }
+            } catch (error) {
+                console.error('Erro:', error);
+                alert('Ocorreu um erro ao conectar ao servidor.');
+            }
+        }
+    </script>
+
+</body>
+
+</html>

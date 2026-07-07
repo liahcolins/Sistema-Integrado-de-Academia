@@ -50,11 +50,12 @@
             <li><a href="/admin/gerenciar-personais">Personais</a></li>
             <li><a href="/admin/gerenciar-exercicios">Exercícios</a></li>
             <li><a href="/admin/treinos">Treinos</a></li>
+            <li><a href="/admin/usuarios-pendentes">Aprovações</a></li>
             <li><a href="#">Matrículas</a></li>
         </ul>
 
         <div class="nav-buttons">
-            <button class="btn-login">SAIR</button>
+            <button class="btn-login" onclick="window.location.href='/login'">SAIR</button>
         </div>
     </nav>
 
@@ -79,8 +80,7 @@
 
         <section class="admin-actions">
 
-            <a href="/admin/gerenciar-
-            clientes" class="admin-card">
+            <a href="/admin/gerenciar-clientes" class="admin-card">
                 <h3>Clientes</h3>
                 <p>Gerencie cadastros de alunos.</p>
             </a>
@@ -90,7 +90,7 @@
                 <p>Gerencie personal trainers.</p>
             </a>
 
-            <a href="#" class="admin-card">
+            <a href="/admin/gerenciar-exercicios" class="admin-card">
                 <h3>Exercícios</h3>
                 <p>Cadastre exercícios.</p>
             </a>
@@ -98,6 +98,11 @@
             <a href="/admin/treinos" class="admin-card">
                 <h3>Treinos</h3>
                 <p>Monte e organize treinos.</p>
+            </a>
+
+            <a href="/admin/usuarios-pendentes" class="admin-card">
+                <h3>Aprovações</h3>
+                <p>Aprovar novos cadastros de usuários.</p>
             </a>
 
             <a href="#" class="admin-card">
