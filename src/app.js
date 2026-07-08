@@ -455,6 +455,10 @@ db.query(addColumnSql, (err) => {
     }
 });
 
+// Adicionar status na tabela treino se não existir
+const addStatusToTreinoSql = `ALTER TABLE treino ADD COLUMN status VARCHAR(20) NOT NULL DEFAULT 'Ativo'`;
+db.query(addStatusToTreinoSql, () => {});
+
 // Criar tabela solicitacao_treino se não existir
 const createTableSql = `
 CREATE TABLE IF NOT EXISTS solicitacao_treino (
@@ -515,6 +519,135 @@ app.put('/api/solicitacoes-treino/:id/aprovar', (req, res) => {
         res.json({ sucesso: true });
     });
 });
+
+app.post('/api/solicitacoes-treino/:id/responder-montar', (req, res) => {
+    const solicitacaoId = req.params.id;
+    const { mensagem, exercicios } = req.body;
+
+    const sqlGetSolicitacao = 'SELECT * FROM solicitacao_treino WHERE id = ?';
+    db.query(sqlGetSolicitacao, [solicitacaoId], (err, results) => {
+        if (err || results.length === 0) {
+            console.error('Erro ao buscar solicitação:', err);
+            return res.status(500).json({ erro: 'Solicitação não encontrada' });
+        }
+
+        const solicitacao = results[0];
+        const { cliente_id, personal_id, objetivo } = solicitacao;
+
+        const sqlInsertTreino = 'INSERT INTO treino (nome, data_criacao, observacoes, cliente_id, personal_id, status) VALUES (?, ?, ?, ?, ?, ?)';
+        const hoje = new Date().toISOString().split('T')[0];
+        const nomeTreino = `Treino - ${objetivo}`;
+
+        db.query(sqlInsertTreino, [nomeTreino, hoje, mensagem, cliente_id, personal_id, 'Pendente'], (errTreino, resultTreino) => {
+            if (errTreino) {
+                console.error('Erro ao cadastrar treino:', errTreino);
+                return res.status(500).json({ erro: 'Erro ao cadastrar treino' });
+            }
+
+            const treinoId = resultTreino.insertId;
+
+            if (exercicios && exercicios.length > 0) {
+                const sqlInsertItem = `
+                    INSERT INTO item_treino (treino_id, exercicio_id, series, repeticoes, peso, tempo, descanso, instrucoes)
+                    VALUES ?
+                `;
+                const values = exercicios.map(ex => [
+                    treinoId,
+                    parseInt(ex.exercicio_id),
+                    parseInt(ex.series) || 4,
+                    parseInt(ex.repeticoes) || 12,
+                    parseFloat(ex.peso) || 0.0,
+                    null,
+                    60,
+                    ex.instrucoes || ''
+                ]);
+
+                db.query(sqlInsertItem, [values], (errItems) => {
+                    if (errItems) {
+                        console.error('Erro ao cadastrar itens do treino:', errItems);
+                    }
+                });
+            }
+
+            const sqlUpdateSolicitacao = 'UPDATE solicitacao_treino SET status = ? WHERE id = ?';
+            db.query(sqlUpdateSolicitacao, ['Aprovado', solicitacaoId], (errUpdate) => {
+                if (errUpdate) console.error('Erro ao atualizar status da solicitação:', errUpdate);
+                
+                res.json({ sucesso: true, treinoId });
+            });
+        });
+    });
+});
+
+// Buscar treinos e respectivos exercícios de um cliente
+app.get('/api/cliente/:id/treinos', (req, res) => {
+    const clienteId = req.params.id;
+    const sql = `
+        SELECT t.id, t.nome, t.data_criacao, t.observacoes, t.status, p.nome AS personal_nome
+        FROM treino t
+        LEFT JOIN personal_trainer p ON t.personal_id = p.id
+        WHERE t.cliente_id = ?
+        ORDER BY t.id DESC
+    `;
+    db.query(sql, [clienteId], (err, treinos) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ erro: 'Erro ao buscar treinos do cliente' });
+        }
+        if (treinos.length === 0) {
+            return res.json([]);
+        }
+
+        const treinoIds = treinos.map(t => t.id);
+        const sqlItens = `
+            SELECT it.treino_id, it.series, it.repeticoes, it.peso, it.tempo, it.descanso, it.instrucoes, e.nome AS exercicio_nome, e.categoria
+            FROM item_treino it
+            INNER JOIN exercicio e ON it.exercicio_id = e.id
+            WHERE it.treino_id IN (?)
+        `;
+        db.query(sqlItens, [treinoIds], (errItens, itens) => {
+            if (errItens) {
+                console.error(errItens);
+                return res.status(500).json({ erro: 'Erro ao buscar itens de treino' });
+            }
+
+            const resultado = treinos.map(t => {
+                return {
+                    ...t,
+                    exercicios: itens.filter(it => it.treino_id === t.id)
+                };
+            });
+            res.json(resultado);
+        });
+    });
+});
+
+// Aceitar um treino proposto
+app.put('/api/treinos/:id/aceitar', (req, res) => {
+    const treinoId = req.params.id;
+    const sqlGetTreino = 'SELECT cliente_id FROM treino WHERE id = ?';
+    db.query(sqlGetTreino, [treinoId], (err, results) => {
+        if (err || results.length === 0) {
+            return res.status(500).json({ erro: 'Treino não encontrado' });
+        }
+        const clienteId = results[0].cliente_id;
+        
+        const sqlDesativar = 'UPDATE treino SET status = ? WHERE cliente_id = ?';
+        db.query(sqlDesativar, ['Inativo', clienteId], (err2) => {
+            if (err2) console.error(err2);
+
+            const sqlAtivar = 'UPDATE treino SET status = ? WHERE id = ?';
+            db.query(sqlAtivar, ['Ativo', treinoId], (err3) => {
+                if (err3) {
+                    console.error(err3);
+                    return res.status(500).json({ erro: 'Erro ao ativar treino' });
+                }
+                res.json({ sucesso: true });
+            });
+        });
+    });
+});
+
 
 // Obter detalhes do cliente logado (como personal_id associado)
 app.get('/api/cliente-detalhes/:id', (req, res) => {

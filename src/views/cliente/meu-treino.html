@@ -65,7 +65,7 @@
             </div>
 
             <!-- STATUS DE APROVAÇÃO -->
-            <div class="approval-banner" id="approvalBanner">
+            <div class="approval-banner" id="approvalBanner" style="display: none;">
                 <div class="banner-status-info">
                     <span class="material-symbols-outlined status-icon">info</span>
                     <div>
@@ -73,112 +73,12 @@
                         <p id="approvalStatusDesc">Analise a lista de exercícios abaixo. Se estiver de acordo, clique em aprovar para confirmar.</p>
                     </div>
                 </div>
-                <button class="btn-approve" id="btnApprove" onclick="aprovarRotina()">Aprovar Rotina</button>
+                <button class="btn-approve" id="btnApprove">Aceitar Novo Treino</button>
             </div>
 
             <!-- CARDS DE TREINO -->
-            <div class="treinos-cards">
-
-                <div class="treino-card">
-                    <div class="card-header-treino">
-                        <h3>Treino A</h3>
-                        <span class="muscle-tag">Peito + Tríceps</span>
-                    </div>
-                    
-                    <div class="exercise-list">
-                        <div class="exercise-row">
-                            <span class="exercise-name">Supino reto</span>
-                            <span class="exercise-params">4x12 | 50kg</span>
-                        </div>
-                        <div class="exercise-row">
-                            <span class="exercise-name">Supino inclinado</span>
-                            <span class="exercise-params">4x10 | 40kg</span>
-                        </div>
-                        <div class="exercise-row">
-                            <span class="exercise-name">Crucifixo</span>
-                            <span class="exercise-params">3x12 | 14kg</span>
-                        </div>
-                        <div class="exercise-row">
-                            <span class="exercise-name">Tríceps corda</span>
-                            <span class="exercise-params">4x12 | 20kg</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="treino-card">
-                    <div class="card-header-treino">
-                        <h3>Treino B</h3>
-                        <span class="muscle-tag">Costas + Bíceps</span>
-                    </div>
-                    
-                    <div class="exercise-list">
-                        <div class="exercise-row">
-                            <span class="exercise-name">Puxada alta</span>
-                            <span class="exercise-params">4x12 | 45kg</span>
-                        </div>
-                        <div class="exercise-row">
-                            <span class="exercise-name">Remada curvada</span>
-                            <span class="exercise-params">4x10 | 35kg</span>
-                        </div>
-                        <div class="exercise-row">
-                            <span class="exercise-name">Rosca direta</span>
-                            <span class="exercise-params">3x12 | 20kg</span>
-                        </div>
-                        <div class="exercise-row">
-                            <span class="exercise-name">Rosca martelo</span>
-                            <span class="exercise-params">4x10 | 12kg</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="treino-card">
-                    <div class="card-header-treino">
-                        <h3>Treino C</h3>
-                        <span class="muscle-tag">Pernas Completo</span>
-                    </div>
-                    
-                    <div class="exercise-list">
-                        <div class="exercise-row">
-                            <span class="exercise-name">Agachamento livre</span>
-                            <span class="exercise-params">4x10 | 60kg</span>
-                        </div>
-                        <div class="exercise-row">
-                            <span class="exercise-name">Leg press 45º</span>
-                            <span class="exercise-params">4x12 | 120kg</span>
-                        </div>
-                        <div class="exercise-row">
-                            <span class="exercise-name">Cadeira extensora</span>
-                            <span class="exercise-params">3x12 | 50kg</span>
-                        </div>
-                        <div class="exercise-row">
-                            <span class="exercise-name">Mesa flexora</span>
-                            <span class="exercise-params">4x10 | 30kg</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="treino-card">
-                    <div class="card-header-treino">
-                        <h3>Cardio</h3>
-                        <span class="muscle-tag">Condicionamento</span>
-                    </div>
-                    
-                    <div class="exercise-list">
-                        <div class="exercise-row">
-                            <span class="exercise-name">Esteira</span>
-                            <span class="exercise-params">20 min | Vel. 9</span>
-                        </div>
-                        <div class="exercise-row">
-                            <span class="exercise-name">Bicicleta</span>
-                            <span class="exercise-params">15 min | Carga 5</span>
-                        </div>
-                        <div class="exercise-row">
-                            <span class="exercise-name">Elíptico</span>
-                            <span class="exercise-params">10 min | Carga 6</span>
-                        </div>
-                    </div>
-                </div>
-
+            <div class="treinos-cards" id="treinosCardsContainer">
+                <div style="text-align: center; color: #888; width: 100%; padding: 40px 0;">Carregando treinos...</div>
             </div>
 
             <!-- FORMULÁRIO DE SOLICITAÇÃO -->
@@ -250,11 +150,8 @@
         let personalIdAssociado = null;
 
         document.addEventListener('DOMContentLoaded', async () => {
-            const aprovado = localStorage.getItem('treino_aprovado') === 'true';
-            if (aprovado) {
-                definirStatusAprovado();
-            }
             await verificarAssociacaoPersonal();
+            await carregarTreinosDoCliente();
             carregarMinhasSolicitacoes();
         });
 
@@ -283,24 +180,106 @@
             }
         }
 
-        function aprovarRotina() {
-            localStorage.setItem('treino_aprovado', 'true');
-            definirStatusAprovado();
-            alert('Rotina de treinos aprovada com sucesso!');
+        async function carregarTreinosDoCliente() {
+            const container = document.getElementById('treinosCardsContainer');
+            try {
+                const res = await fetch(`/api/cliente/${CLIENTE_ID}/treinos`);
+                const treinos = await res.json();
+                
+                const banner = document.getElementById('approvalBanner');
+                
+                if (treinos.length === 0) {
+                    banner.style.display = 'none';
+                    container.innerHTML = `<div style="text-align: center; color: #888; width: 100%; padding: 40px 0;">Você não possui nenhum treino cadastrado no momento. Envie uma solicitação abaixo!</div>`;
+                    return;
+                }
+
+                const treinoPendente = treinos.find(t => t.status === 'Pendente');
+                const treinoAtivo = treinos.find(t => t.status === 'Ativo');
+
+                if (treinoPendente) {
+                    banner.style.display = 'flex';
+                    banner.classList.remove('approved');
+                    
+                    const title = document.getElementById('approvalStatusTitle');
+                    const desc = document.getElementById('approvalStatusDesc');
+                    const btn = document.getElementById('btnApprove');
+                    
+                    title.textContent = 'Novo Treino Proposto por seu Personal';
+                    desc.textContent = `O Personal Trainer ${treinoPendente.personal_nome || 'Nicolas Martins'} montou uma nova rotina. Caso esteja de acordo, clique no botão ao lado.`;
+                    
+                    btn.style.display = 'inline-block';
+                    btn.textContent = 'Aceitar Novo Treino';
+                    btn.onclick = () => aceitarNovoTreino(treinoPendente.id);
+
+                    renderTreino(treinoPendente, container);
+                } else if (treinoAtivo) {
+                    banner.style.display = 'flex';
+                    banner.classList.add('approved');
+                    
+                    const title = document.getElementById('approvalStatusTitle');
+                    const desc = document.getElementById('approvalStatusDesc');
+                    const btn = document.getElementById('btnApprove');
+                    
+                    title.innerHTML = `Rotina de Treinos Ativa <span class="badge bg-success ms-2" style="font-size: 12px; vertical-align: middle;">ATIVO</span>`;
+                    desc.textContent = `Bons treinos! Caso queira alterar sua rotina, faça uma solicitação abaixo.`;
+                    
+                    if (btn) btn.style.display = 'none';
+
+                    renderTreino(treinoAtivo, container);
+                } else {
+                    banner.style.display = 'none';
+                    container.innerHTML = `<div style="text-align: center; color: #888; width: 100%; padding: 40px 0;">Nenhum treino ativo no momento. Faça uma solicitação abaixo!</div>`;
+                }
+            } catch (err) {
+                console.error('Erro ao buscar treinos:', err);
+                container.innerHTML = `<div style="text-align: center; color: #dc2626; width: 100%; padding: 40px 0;">Erro ao carregar treinos do servidor.</div>`;
+            }
         }
 
-        function definirStatusAprovado() {
-            const banner = document.getElementById('approvalBanner');
-            const icon = banner.querySelector('.status-icon');
-            const title = document.getElementById('approvalStatusTitle');
-            const desc = document.getElementById('approvalStatusDesc');
-            const btn = document.getElementById('btnApprove');
+        function renderTreino(treino, container) {
+            let exerciciosHtml = '';
+            if (!treino.exercicios || treino.exercicios.length === 0) {
+                exerciciosHtml = '<div style="color: #888; padding: 15px; text-align: center;">Nenhum exercício adicionado a este treino.</div>';
+            } else {
+                treino.exercicios.forEach(ex => {
+                    exerciciosHtml += `
+                        <div class="exercise-row">
+                            <span class="exercise-name">${ex.exercicio_nome}</span>
+                            <span class="exercise-params">${ex.series}x${ex.repeticoes} | ${ex.peso}kg</span>
+                        </div>
+                    `;
+                });
+            }
 
-            banner.classList.add('approved');
-            icon.textContent = 'check_circle';
-            title.textContent = 'Rotina de Treinos Aprovada';
-            desc.textContent = 'Você aprovou esta rotina de exercícios. Bom treino!';
-            if (btn) btn.remove();
+            container.innerHTML = `
+                <div class="treino-card" style="width: 100%; max-width: 600px; margin: 0 auto;">
+                    <div class="card-header-treino">
+                        <h3>${treino.nome}</h3>
+                        <span class="muscle-tag">Personal: ${treino.personal_nome || 'Nicolas Martins'}</span>
+                    </div>
+                    <div class="exercise-list">
+                        ${exerciciosHtml}
+                    </div>
+                </div>
+            `;
+        }
+
+        async function aceitarNovoTreino(treinoId) {
+            try {
+                const res = await fetch(`/api/treinos/${treinoId}/aceitar`, {
+                    method: 'PUT'
+                });
+                if (res.ok) {
+                    alert('Novo treino aceito com sucesso! Bons treinos!');
+                    await carregarTreinosDoCliente();
+                } else {
+                    alert('Erro ao aceitar treino.');
+                }
+            } catch (err) {
+                console.error('Erro ao aceitar treino:', err);
+                alert('Erro ao conectar ao servidor.');
+            }
         }
 
         async function carregarMinhasSolicitacoes() {
