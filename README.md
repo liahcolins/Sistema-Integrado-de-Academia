@@ -281,7 +281,7 @@ O projeto está em evolução e possui pontos técnicos planejados para melhoria
 
 ## Integrantes
 
-- Ana Patricia Garros Viegas;
+- Ana Patricia Braga Garros;
 - Guilherme Haniel Costa Passinho;
 - Guilherme Pessôa Lima Diniz;
 - Liah Renata Colins da Silva.
